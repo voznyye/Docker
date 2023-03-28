@@ -4,9 +4,13 @@ let path = require("path");
 
 module.exports = {
   mode: 'development',
-  entry: './clients/scripts/script.js',
+  entry: {
+    scripts: './clients/scripts/script.js',
+    signIN: './clients/scripts/registration/sign-in.js',
+    signUP: './clients/scripts/registration/sign-up.js',
+  },
   output: {
-    filename: 'scripts.js',
+    filename: '[name].js',
     path: __dirname + '/clients/build'
   },
   watch: true,

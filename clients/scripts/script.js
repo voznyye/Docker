@@ -6,10 +6,9 @@ import requests from "./modules/requests";
 import "./modules/cleaner";
 
 
+
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
-
-    console.log("Hello world");
 
     let state = {};
 
