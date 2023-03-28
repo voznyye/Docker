@@ -32,9 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     console.log(response.message);
                     clean(state);
                     cleanInputs();
-                    alert(response.message);
-                    console.log(state);
-                    // window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
+                    window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                 })
             }
         })

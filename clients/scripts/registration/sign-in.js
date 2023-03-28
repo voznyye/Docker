@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         alert(response.error);
                         return;
                     }
-                    // window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+                    window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
                     localStorage.removeItem("token");
                     localStorage.setItem("token", response.hash);
                 })
