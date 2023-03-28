@@ -29,10 +29,18 @@ window.addEventListener("DOMContentLoaded", () => {
             if(event && event.target){
                 postRequest("http://127.0.0.1/api/user/", state, getToken("token"))
                 .then(response => {
-                    console.log(response.message);
-                    clean(state);
-                    cleanInputs();
-                    window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
+                    const timer = setTimeout(function delay(){
+                        if(response){
+                            clearInterval(timer);
+                            console.log(response.message);
+                            clean(state);
+                            cleanInputs();
+                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
+                        } else {
+                            setTimeout(delay, 3000);
+                        }
+                    }, 3000)
+
                 })
             }
         })
