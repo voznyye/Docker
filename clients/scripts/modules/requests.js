@@ -11,10 +11,9 @@ function requests(state) {
     console.log("Hello requests");
 
     const signUPButton = document.getElementById("form-sign_up-button"),
+        signINButton = document.getElementById("form-sign_in-button"),
         formNameInput = document.getElementById("form-name-input"),
         formPasswordInput = document.getElementById("form-password-input");
-
-
 
     // const getData = document.getElementById("get-data-button"),
     //     formLoginInput = document.getElementById("form-login-input"),
@@ -55,49 +54,54 @@ function requests(state) {
     //     }
     // })
 
-    // signINButton.addEventListener("click", event => {
-    //     event.preventDefault();
-    //     console.log(state);
-    //     if(!state.name || !state.password){
-    //         alert("Вы не зарегистрированы")
-    //         return;
-    //     }
+    try{
+        signINButton.addEventListener("click", event => {
+            event.preventDefault();
+            console.log(state);
+            if(!state.name || !state.password){
+                alert("Вы не зарегистрированы")
+                return;
+            }
+    
+            if(event && event.target){
+                postRequest("http://127.0.0.1/api/login/", state, getToken("token"))
+                .then(response => {
+                    if(response.error){
+                        alert(response.error);
+                        return;
+                    }
+                    window.open("./../../users.html");
+                    localStorage.removeItem("token");
+                    localStorage.setItem("token", response.hash);
+                })
+                .finally(() => {
+                    clean(state);
+                    cleanInputs();
+                    console.log(state);
+                })
+            }
+        })
 
-    //     if(event && event.target){
-    //         postRequest("http://127.0.0.1/api/login/", state, getToken("token"))
-    //         .then(response => {
-    //             if(response.error){
-    //                 alert(response.error);
-    //                 return;
-    //             }
-    //             window.open("./../../users.html");
-    //             localStorage.removeItem("token");
-    //             localStorage.setItem("token", response.hash);
-    //         })
-    //         .finally(() => {
-    //             clean(state);
-    //             cleanInputs();
-    //             console.log(state);
-    //         })
-    //     }
-    // })
+        signUPButton.addEventListener("click", event => {
+            event.preventDefault();
+    
+            if(!state.name || !state.password){
+                alert("Заполните имя и пароль");
+                return;
+            }
+    
+            if(event && event.target){
+                postRequest("http://127.0.0.1/api/user/", state, getToken("token"))
+                .then(response => {
+                    console.log(response.message);
+                    window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
+                })
+            }
+        })
+    } catch(error){
+        console.log(error);
+    }
 
-    signUPButton.addEventListener("click", event => {
-        event.preventDefault();
-
-        if(!state.name || !state.password){
-            alert("Заполните имя и пароль");
-            return;
-        }
-
-        if(event && event.target){
-            postRequest("http://127.0.0.1/api/user/", state, getToken("token"))
-            .then(response => {
-                console.log(response.message);
-                window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
-            })
-        }
-    })
 
     // getOneDataUser.addEventListener("click", event => {
     //     event.preventDefault();
