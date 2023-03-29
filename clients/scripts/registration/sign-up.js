@@ -6,7 +6,6 @@ import getToken from "../verification/verification";
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
-
     function signUP(){
         const state = {};
         
@@ -33,9 +32,9 @@ window.addEventListener("DOMContentLoaded", () => {
                         if(response){
                             clearInterval(timer);
                             console.log(response.message);
+                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                             clean(state);
                             cleanInputs();
-                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                         } else {
                             setTimeout(delay, 3000);
                         }

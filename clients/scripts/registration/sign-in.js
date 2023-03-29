@@ -28,13 +28,22 @@ window.addEventListener("DOMContentLoaded", () => {
             if(event && event.target){
                 postRequest("http://127.0.0.1/api/login/", state, getToken("token"))
                 .then(response => {
-                    if(response.error){
-                        alert(response.error);
-                        return;
-                    }
-                    window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
-                    localStorage.removeItem("token");
-                    localStorage.setItem("token", response.hash);
+                    const timer = setTimeout(function delay(){
+                        if(response){
+                            if(response.error){
+                                alert(response.error);
+                                clearInterval(timer);
+                                return;
+                            } else {
+                                clearInterval(timer);
+                                window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+                                localStorage.removeItem("token");
+                                localStorage.setItem("token", response.hash);
+                            }
+                        } else {
+                            setTimeout(delay, 2000);
+                        }
+                    }, 2000)
                 })
                 .finally(() => {
                     clean(state);

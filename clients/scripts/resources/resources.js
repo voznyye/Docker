@@ -14,10 +14,9 @@ async function postRequest(url, data, header = getToken("token")) {
     console.log(result);
 
     return await result.json();
-
 }   
 
-async function getDataRequest(url, header){
+async function request(method, url, header){
 
     if(!getToken("token")){
         alert("Вы не зарегстрированы или не авторизованы");
@@ -25,7 +24,7 @@ async function getDataRequest(url, header){
     }
 
     const result = await fetch(url, {
-        method: "GET",
+        method: method,
         headers: {
             "Content-type": "application/json; charset=UTF-8",
             ...header
@@ -35,28 +34,6 @@ async function getDataRequest(url, header){
     return await result.json();
 
 }
-
-async function deleteUser(url, header){
-        if(!getToken("token")){
-            alert("Вы не зарегстрированы или не авторизованы");
-            return;
-        }
-
-        const result = await fetch(url, {
-            method: 'DELETE',
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                ...header
-            }
-        })
-
-        if(!result.ok){
-            console.log(result.statusText);
-        } 
-           
-        return await result.json();
-}
-
 
 async function changeData(url, data, header){
     if(!getToken("token")){
@@ -76,10 +53,5 @@ async function changeData(url, data, header){
     return await result.json();
 }
 
-export {getDataRequest};
-export {postRequest};
-
-export {deleteUser};
-
-export {changeData};
+export {request, postRequest, changeData};
 
