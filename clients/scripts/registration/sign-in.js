@@ -34,21 +34,17 @@ window.addEventListener("DOMContentLoaded", () => {
                                 alert(response.error);
                                 clearInterval(timer);
                                 return;
-                            } else {
-                                clearInterval(timer);
-                                window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
-                                localStorage.removeItem("token");
-                                localStorage.setItem("token", response.hash);
-                            }
+                            } 
+                            clearInterval(timer);
+                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+                            localStorage.removeItem("token");
+                            localStorage.setItem("token", response.hash);
+                            clean(state);
+                            cleanInputs();
                         } else {
                             setTimeout(delay, 2000);
                         }
                     }, 2000)
-                })
-                .finally(() => {
-                    clean(state);
-                    cleanInputs();
-                    console.log(state);
                 })
             }
         })
