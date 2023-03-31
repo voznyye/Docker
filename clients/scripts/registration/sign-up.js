@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             console.log(response.message);
                             window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                             clean(state);
-                            cleanInputs();
+                            cleanInputs("formInputs");
                         } else {
                             setTimeout(delay, 3000);
                         }

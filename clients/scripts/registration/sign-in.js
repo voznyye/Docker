@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             localStorage.removeItem("token");
                             localStorage.setItem("token", response.hash);
                             clean(state);
-                            cleanInputs();
+                            cleanInputs("formInputs");
                         } else {
                             setTimeout(delay, 2000);
                         }

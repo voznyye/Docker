@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-	<title>Users </title>
+	<title>HomePage</title>
 	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="./styles/style.min.css?_v=20230317161731">
+	<link rel="stylesheet" href="./styles/style.min.css">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -37,116 +38,51 @@
 						<a href="./sign-up.html" class="header__button button">Sign up</a>
 						<a href="./log-in.html" class="header__button button">Log in</a>
 					</div>
+
+					<!-- <div class="header__buttons">
+						<a href="#" class="header__name">User Name</a>
+					</div> -->
 				</div>
-				<form class="header__search" action="#">
-					<input autocomplete="off" type="text" name="form[]" data-error="Помилка" placeholder="Search..." class="input" />
-					<button type="submit" class="header__search-btn">
-						<img src="./images/search.svg" alt="" />
-					</button>
-				</form>
 			</div>
 		</header>
 
 		<main class="page">
-			<section class="hero">
-				<div class="hero__container">
-					<div class="hero__body">
-						<h1 class="hero__title">Current Offers</h1>
-						<div class="hero__products">
-							<div class="hero__product product-hero">
-								<h3 class="product-hero__title">Egypt cat</h3>
-								<div href="" class="product-hero__img">
-									<picture><source srcset="./images/1.webp" type="image/webp"><img src="./images/1.png" alt="" /></picture>
-								</div>
-								<div class="product-hero__descr">
-									<p>
-										It's a very beautiful cat Lorem ipsum dolor sit amet
-										consectetur adipisicing elit. Possimus assumenda
-										explicabo, quasi numq
-									</p>
-								</div>
-								<a href="" class="product-hero__more">more...</a>
-								<div class="product-hero__block">
-									<a href="" class="product-hero__bid">Bet</a>
-									<a href="" class="product-hero__buy">Buy</a>
-								</div>
+			<div class="user">
+				<div class="user__container">
+					<div class="user__body">
+						<form action="" class="user__form">
+							<div class="user__form-input-block">
+								<input type="text" id="user-id" name="id" placeholder="User ID" class="input" />
+								<input type="text" id="user-name" name="name" placeholder="User name" class="input" />
+								<input type="text" id="user-password" name="password" placeholder="User password" class="input" />
 							</div>
-							<div class="hero__product product-hero">
-								<h3 class="product-hero__title">Egypt cat</h3>
-								<a href="" class="product-hero__img">
-									<picture><source srcset="./images/1.webp" type="image/webp"><img src="./images/1.png" alt="" /></picture>
-								</a>
-								<div class="product-hero__descr">
-									<p>
-										It's a very beautiful cat Lorem ipsum dolor sit amet
-										consectetur adipisicing elit. Possimus assumenda
-										explicabo, quasi numq
-									</p>
-								</div>
-								<a href="" class="product-hero__more">more...</a>
-								<div class="product-hero__block">
-									<a href="" class="product-hero__bid">Bet</a>
-									<a href="" class="product-hero__buy">Buy</a>
-								</div>
-							</div>
-							<div class="hero__product product-hero">
-								<h3 class="product-hero__title">Egypt cat</h3>
-								<a href="" class="product-hero__img">
-									<picture><source srcset="./images/1.webp" type="image/webp"><img src="./images/1.png" alt="" /></picture>
-								</a>
-								<div class="product-hero__descr">
-									<p>
-										It's a very beautiful cat Lorem ipsum dolor sit amet
-										consectetur adipisicing elit. Possimus assumenda
-										explicabo, quasi numq
-									</p>
-								</div>
-								<a href="" class="product-hero__more">more...</a>
-								<div class="product-hero__block">
-									<a href="" class="product-hero__bid">Bet</a>
-									<a href="" class="product-hero__buy">Buy</a>
-								</div>
-							</div>
-							<div class="hero__product product-hero">
-								<h3 class="product-hero__title">Egypt cat</h3>
-								<a href="" class="product-hero__img">
-									<picture><source srcset="./images/1.webp" type="image/webp"><img src="./images/1.png" alt="" /></picture>
-								</a>
-								<div class="product-hero__descr">
-									<p>
-										It's a very beautiful cat Lorem ipsum dolor sit amet
-										consectetur adipisicing elit. Possimus assumenda
-										explicabo, quasi numq
-									</p>
-								</div>
-								<a href="" class="product-hero__more">more...</a>
-								<div class="product-hero__block">
-									<a href="" class="product-hero__bid">Bet</a>
-									<a href="" class="product-hero__buy">Buy</a>
-								</div>
-							</div>
-							<div class="hero__product product-hero">
-								<h3 class="product-hero__title">Egypt cat</h3>
-								<a href="" class="product-hero__img">
-									<picture><source srcset="./images/1.webp" type="image/webp"><img src="./images/1.png" alt="" /></picture>
-								</a>
-								<div class="product-hero__descr">
-									<p>
-										It's a very beautiful cat Lorem ipsum dolor sit amet
-										consectetur adipisicing elit. Possimus assumenda
-										explicabo, quasi numq
-									</p>
-								</div>
-								<a href="" class="product-hero__more">more...</a>
-								<div class="product-hero__block">
-									<a href="" class="product-hero__bid">Bet</a>
-									<a href="" class="product-hero__buy">Buy</a>
-								</div>
-							</div>
+							<button class="user__button user__button-submit" id="get-one-user" type="submit">
+								Get user information
+							</button>
+						</form>
+						<div class="user__buttons">
+							<button class="user__button user__button-add" id="get-all-users">
+								Get users information
+							</button>
+							<button class="user__button user__button-edit" id="delete-user">
+								delete User
+							</button>
+							<button class="user__button user__button-delete" id="change-user-data">
+								change information about User
+							</button>
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
+
+			<div class="content" id="content">
+				<div class="user__content">
+					<h2 class="user__title">All Users</h2>
+					<div class="user__box" id="user-box">
+
+					</div>
+				</div>
+			</div>
 		</main>
 		<footer class="footer">
 			<div class="footer__container">
