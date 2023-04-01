@@ -2,6 +2,7 @@ import {clean, cleanInputs} from "../modules/cleaner";
 import { bindInput } from "../modules/bindFunc";
 import { postRequest } from "../resources/resources";
 import getToken from "../verification/verification";
+import { updateLocalStorage } from "../verification/verification";
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -17,7 +18,8 @@ window.addEventListener("DOMContentLoaded", () => {
         bindInput(state, formNameInput);
         bindInput(state, formPasswordInput);
 
-        signINButton.addEventListener("click", event => {
+
+        function sendRequest(event){
             event.preventDefault();
             console.log(state);
             if(!state.name || !state.password){
@@ -26,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }
     
             if(event && event.target){
-                postRequest("http://127.0.0.1/api/login/", state, getToken("token"))
+                postRequest(`${window.env.host}/api/login/`, state, getToken("token"))
                 .then(response => {
                     const timer = setTimeout(function delay(){
                         if(response){
@@ -37,24 +39,23 @@ window.addEventListener("DOMContentLoaded", () => {
                             } 
                             clearInterval(timer);
 
-                            localStorage.removeItem("token");
-                            localStorage.removeItem("user_id");
-                            localStorage.removeItem("user_name");
-                            localStorage.setItem("token", response.hash);
-                            localStorage.setItem("user_id", response.user.id);
-                            localStorage.setItem("user_name", response.user.name);
+                            updateLocalStorage("token", response.hash);
+                            updateLocalStorage("user_id", response.user.id)
+                            updateLocalStorage("user_name", response.user.name)
                             clean(state);
                             cleanInputs("formInputs");
-                            location.href = 'users.html';
                             // Переход на другую страницу, не обновляя текущую страницу
-                            console.log(document.location);
+                            location.href = 'users.html';
+                            console.log(response);
                         } else {
                             setTimeout(delay, 2000);
                         }
                     }, 2000)
                 })
             }
-        })
+        }
+                                                            // this = event в данном случае. event объект события передается в getElementuser()
+        signINButton.addEventListener("click", sendRequest.bind(this));
 
     }
 

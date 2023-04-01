@@ -17,6 +17,12 @@ function requests() {
 
         userBox = document.getElementById("user-box");
 
+    // магический строк 
+    const methods = {
+        get: "GET",
+        delete: "DELETE"
+    }
+
     const state = {
         usersData: [],
         id: "",
@@ -32,27 +38,25 @@ function requests() {
         state.usersData = [];
         state.id = "";
         state.name = "",
-            state.password = "";
+        state.password = "";
     }
 
-    // TODO вынести в функции "click", funcName.bind(this))
-    getAllUsersButton.addEventListener("click", event => {
-
+    function getUsersData(event) {
         if (event && event.target) {
-            request("GET", window.env.host + '/api/user/', getToken("token"))
-                .then(response => {
-                    if (response.length > 0) {
-                        state.usersData = response;
-                        userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                        console.log(state.usersData);
-                    } else {
-                        userBox.innerHTML = "Нет пользователей";
-                    }
-                })
+            request(methods.get, window.env.host + '/api/user/', getToken("token"))
+            .then(response => {
+                if (response.length > 0) {
+                    state.usersData = response;
+                    userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
+                    console.log(state.usersData);
+                } else {
+                    userBox.innerHTML = "Нет пользователей";
+                }
+            })
         }
-    })
+    } 
 
-    getOneUserButton.addEventListener("click", event => {
+    function getUserData(event){
         event.preventDefault();
 
         if (!state.id) {
@@ -61,40 +65,38 @@ function requests() {
         }
 
         if (event && event.target) {
-            // TODO для магических строк типа 'GET' используй константы.
-            request("GET", `${window.env.host}/api/user/${state.id}`, getToken("token"))
-                .then(response => {
-                    if (response.error) {
-                        alert(response.error);
-                        return;
-                    }
-                    console.log(response);
-                    userBox.innerHTML = renderUserCard(response);
-                })
+            request(methods.get, `${window.env.host}/api/user/${state.id}`, getToken("token"))
+            .then(response => {
+                if (response.error) {
+                    alert(response.error);
+                    return;
+                }
+                console.log(response);
+                userBox.innerHTML = renderUserCard(response);
+            })
         }
-    })
+    }
 
-    deleteUserButton.addEventListener("click", event => {
+    function deleteUser(event){
         if (!state.id) {
             alert("напишите id пользователя")
             return;
         }
 
         if (event && event.target) {
-            request("DELETE", `${window.env.host}/api/user/${state.id}`, getToken("token"))
-                .then(response => {
-                    alert(response.message);
-                    // TODO Использовать строгое соответствие ===
-                    state.usersData = state.usersData.filter(item => item.id != state.id);
-                    userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                    console.log(state.usersData);
-                    cleanThisState();
-                    cleanInputs("userInputs");
-                })
+            request(methods.delete, `${window.env.host}/api/user/${state.id}`, getToken("token"))
+            .then(response => {
+                alert(response.message);
+                state.usersData = state.usersData.filter(item => item.id !== +state.id);
+                userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
+                console.log(state.usersData);
+                cleanThisState();
+                cleanInputs("userInputs");
+            })
         }
-    })
+    }
 
-    changeUserDataButton.addEventListener("click", event => {
+    function changeUserData(event){
         if (!state.id || !state.name || !state.password) {
             alert("Нужно заполнить графы id, имя и пароль")
             return;
@@ -105,21 +107,28 @@ function requests() {
                 name: state.name,
                 password: state.password
             }, getToken("token"))
-                .then(response => {
-                    console.log(response);
-                    state.usersData = state.usersData.map(item => {
-                        if (state.id == item.id) {
-                            return {...item, name: state.name}
-                        }
-                        return item;
-                    })
-                    userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                    cleanThisState();
-                    cleanInputs("userInputs");
+            .then(response => {
+                console.log(response);
+                state.usersData = state.usersData.map(item => {
+                    if (state.id == item.id) {
+                        return {...item, name: state.name}
+                    }
+                    return item;
                 })
+                userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
+                cleanThisState();
+                cleanInputs("userInputs");
+            })
         }
+    }
+                                                                // this = event в данном случае. event объект события передается в getElementuser()
+    getAllUsersButton.addEventListener("click", getUsersData.bind(this));
 
-    })
+    getOneUserButton.addEventListener("click", getUserData.bind(this));
+
+    deleteUserButton.addEventListener("click", deleteUser.bind(this));
+
+    changeUserDataButton.addEventListener("click", changeUserData.bind(this));
 }
 
 export default requests;

@@ -77,7 +77,11 @@
 		</footer>
 
 	</div>
+
+	<!-- создание window.env.host - так и создается искуственное свойство env.host для глобального объекта window при загрузке страницы-->
 	<script src="./build/config.js"></script>
+
+	<!-- Затем подгружаются остальные скрипты и видят новое добавленное свойство window.env.host -->
 	<script src="./build/signUP.js"></script>
 </body>
 
