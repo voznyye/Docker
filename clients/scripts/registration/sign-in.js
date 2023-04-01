@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
                                 return;
                             } 
                             clearInterval(timer);
-                            // window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+
                             localStorage.removeItem("token");
                             localStorage.removeItem("user_id");
                             localStorage.removeItem("user_name");
@@ -46,6 +46,8 @@ window.addEventListener("DOMContentLoaded", () => {
                             clean(state);
                             cleanInputs("formInputs");
                             location.href = 'users.html';
+                            // Переход на другую страницу, не обновляя текущую.
+                            console.log(document.location);
                         } else {
                             setTimeout(delay, 2000);
                         }

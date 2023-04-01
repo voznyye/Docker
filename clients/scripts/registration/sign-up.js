@@ -35,6 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             // window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                             clean(state);
                             cleanInputs("formInputs");
+                            // Переход на другую страницу, не обновляя текущую.
                             location.href = 'log-in.html';
                         } else {
                             setTimeout(delay, 3000);
