@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             clean(state);
                             cleanInputs("formInputs");
                             location.href = 'users.html';
-                            // Переход на другую страницу, не обновляя текущую.
+                            // Переход на другую страницу, не обновляя текущую страницу
                             console.log(document.location);
                         } else {
                             setTimeout(delay, 2000);

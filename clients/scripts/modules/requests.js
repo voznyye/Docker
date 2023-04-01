@@ -1,7 +1,7 @@
-import { request, changeData} from "../resources/resources";
+import {changeData, request} from "../resources/resources";
 import getToken from "../verification/verification";
 import {cleanInputs} from "./cleaner";
-import { bindInput } from "./bindFunc";
+import {bindInput} from "./bindFunc";
 import {renderUserCard, sortUsersID} from "./render";
 
 
@@ -24,23 +24,24 @@ function requests() {
         password: "",
     };
 
-        bindInput(state, idInput);
-        bindInput(state, nameInput);
-        bindInput(state, passwordInput);
+    bindInput(state, idInput);
+    bindInput(state, nameInput);
+    bindInput(state, passwordInput);
 
-        function cleanThisState() {
-            state.usersData = [];
-            state.id = "";
-            state.name = "",
+    function cleanThisState() {
+        state.usersData = [];
+        state.id = "";
+        state.name = "",
             state.password = "";
-        }
+    }
 
-        getAllUsersButton.addEventListener("click", event => {
+    // TODO вынести в функции "click", funcName.bind(this))
+    getAllUsersButton.addEventListener("click", event => {
 
-            if(event && event.target){
-                request("GET", 'http://127.0.0.1/api/user/', getToken("token"))
+        if (event && event.target) {
+            request("GET", window.env.host + '/api/user/', getToken("token"))
                 .then(response => {
-                    if(response.length > 0){
+                    if (response.length > 0) {
                         state.usersData = response;
                         userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
                         console.log(state.usersData);
@@ -48,61 +49,66 @@ function requests() {
                         userBox.innerHTML = "Нет пользователей";
                     }
                 })
-            }
-        })
+        }
+    })
 
-        getOneUserButton.addEventListener("click", event => {
-            event.preventDefault();
+    getOneUserButton.addEventListener("click", event => {
+        event.preventDefault();
 
-            if(!state.id){
-                alert("напишите id пользователя");
-                return;
-            }
+        if (!state.id) {
+            alert("напишите id пользователя");
+            return;
+        }
 
-            if(event && event.target){
-                request("GET", `http://127.0.0.1/api/user/${state.id}`, getToken("token"))
+        if (event && event.target) {
+            // TODO для магических строк типа 'GET' используй константы.
+            request("GET", `${window.env.host}/api/user/${state.id}`, getToken("token"))
                 .then(response => {
-                    if(response.error){
+                    if (response.error) {
                         alert(response.error);
                         return;
                     }
                     console.log(response);
                     userBox.innerHTML = renderUserCard(response);
                 })
-            }
-        })
+        }
+    })
 
-        deleteUserButton.addEventListener("click", event => {  
-            if(!state.id){
-                alert("напишите id пользователя")
-                return;
-            }
+    deleteUserButton.addEventListener("click", event => {
+        if (!state.id) {
+            alert("напишите id пользователя")
+            return;
+        }
 
-            if(event && event.target){
-                request("DELETE", `http://127.0.0.1/api/user/${state.id}`, getToken("token"))
+        if (event && event.target) {
+            request("DELETE", `${window.env.host}/api/user/${state.id}`, getToken("token"))
                 .then(response => {
                     alert(response.message);
+                    // TODO Использовать строгое соответствие ===
                     state.usersData = state.usersData.filter(item => item.id != state.id);
                     userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
                     console.log(state.usersData);
                     cleanThisState();
                     cleanInputs("userInputs");
                 })
-            }
-        })
+        }
+    })
 
-        changeUserDataButton.addEventListener("click", event => {
-            if(!state.id || !state.name || !state.password){
-                alert("Нужно заполнить графы id, имя и пароль")
-                return;
-            }
+    changeUserDataButton.addEventListener("click", event => {
+        if (!state.id || !state.name || !state.password) {
+            alert("Нужно заполнить графы id, имя и пароль")
+            return;
+        }
 
-            if(event && event.target){
-                changeData(`http://127.0.0.1/api/user/${state.id}`, {name: state.name, password: state.password}, getToken("token"))
+        if (event && event.target) {
+            changeData(`${window.env.host}/api/user/${state.id}`, {
+                name: state.name,
+                password: state.password
+            }, getToken("token"))
                 .then(response => {
                     console.log(response);
                     state.usersData = state.usersData.map(item => {
-                        if(state.id == item.id){
+                        if (state.id == item.id) {
                             return {...item, name: state.name}
                         }
                         return item;
@@ -111,9 +117,9 @@ function requests() {
                     cleanThisState();
                     cleanInputs("userInputs");
                 })
-            }
+        }
 
-        })
+    })
 }
 
 export default requests;

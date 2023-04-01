@@ -2,9 +2,13 @@
 
 let path = require("path");
 
+// TODO
+// 1 Вынести минификацию css сюда
+
 module.exports = {
   mode: 'development',
   entry: {
+    config: './clients/scripts/config.js',
     scripts: './clients/scripts/script.js',
     signIN: './clients/scripts/registration/sign-in.js',
     signUP: './clients/scripts/registration/sign-up.js',
