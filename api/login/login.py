@@ -23,6 +23,6 @@ class Login(Resource):
             encoded_jwt = jwt.encode({"id": user['id'], "name": user['name'], "password": user['password']},
                                      current_app.config["SECRET_KEY"], algorithm="HS256")
 
-            return jsonify({'hash': encoded_jwt}), 200
+            return jsonify({'hash': encoded_jwt, 'user': {"id": user['id'], "name": user['name']}}), 200
 
         return jsonify({'error': error}), 401
