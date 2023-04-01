@@ -2,6 +2,9 @@
 
 let path = require("path");
 
+// TODO
+// 1 Вынести минификацию css сюда
+
 module.exports = {
   mode: 'development',
   entry: {

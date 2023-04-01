@@ -35,6 +35,7 @@ function requests() {
             state.password = "";
     }
 
+    // TODO вынести в функции "click", funcName.bind(this))
     getAllUsersButton.addEventListener("click", event => {
 
         if (event && event.target) {
@@ -60,6 +61,7 @@ function requests() {
         }
 
         if (event && event.target) {
+            // TODO для магических строк типа 'GET' используй константы.
             request("GET", `${window.env.host}/api/user/${state.id}`, getToken("token"))
                 .then(response => {
                     if (response.error) {
@@ -82,6 +84,7 @@ function requests() {
             request("DELETE", `${window.env.host}/api/user/${state.id}`, getToken("token"))
                 .then(response => {
                     alert(response.message);
+                    // TODO Использовать строгое соответствие ===
                     state.usersData = state.usersData.filter(item => item.id != state.id);
                     userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
                     console.log(state.usersData);
