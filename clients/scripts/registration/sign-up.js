@@ -32,9 +32,10 @@ window.addEventListener("DOMContentLoaded", () => {
                         if(response){
                             clearInterval(timer);
                             console.log(response.message);
-                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
+                            // window.open("file:///C:/OSPanel/domains/AEH-project/clients/log-in.html");
                             clean(state);
                             cleanInputs("formInputs");
+                            location.href = 'log-in.html';
                         } else {
                             setTimeout(delay, 3000);
                         }
