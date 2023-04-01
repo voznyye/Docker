@@ -3,7 +3,7 @@ function renderUserProfileBlock() {
 
     return `
         <div class="user__block">
-            <div class="user__id" style="display: none">ID: ${item.id}</div>
+            <div class="user__id" style="display: none" data-id="${item.id}">ID: ${item.id}</div>
             <div class="user__name">
                 User profile: <a href="profile.html">${item.name}</a>
             </div>
