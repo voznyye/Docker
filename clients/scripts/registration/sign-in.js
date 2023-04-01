@@ -1,4 +1,4 @@
-import {clean, cleanInputs} from "./../modules/cleaner";
+import {clean, cleanInputs} from "../modules/cleaner";
 import { bindInput } from "../modules/bindFunc";
 import { postRequest } from "../resources/resources";
 import getToken from "../verification/verification";
@@ -36,11 +36,16 @@ window.addEventListener("DOMContentLoaded", () => {
                                 return;
                             } 
                             clearInterval(timer);
-                            window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+                            // window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
                             localStorage.removeItem("token");
+                            localStorage.removeItem("user_id");
+                            localStorage.removeItem("user_name");
                             localStorage.setItem("token", response.hash);
+                            localStorage.setItem("user_id", response.user.id);
+                            localStorage.setItem("user_name", response.user.name);
                             clean(state);
                             cleanInputs("formInputs");
+                            location.href = 'users.html';
                         } else {
                             setTimeout(delay, 2000);
                         }

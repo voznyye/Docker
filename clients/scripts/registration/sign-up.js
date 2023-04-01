@@ -1,4 +1,4 @@
-import {clean, cleanInputs} from "./../modules/cleaner";
+import {clean, cleanInputs} from "../modules/cleaner";
 import { bindInput } from "../modules/bindFunc";
 import { postRequest } from "../resources/resources";
 import getToken from "../verification/verification";
