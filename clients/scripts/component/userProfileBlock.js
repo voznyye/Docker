@@ -1,5 +1,5 @@
 function renderUserProfileBlock() {
-    let item = {id: localStorage.getItem('user_name'), name: localStorage.getItem('user_name')};
+    let item = {id: localStorage.getItem('user_id'), name: localStorage.getItem('user_name')};
 
     return `
         <div class="user__block">
@@ -7,6 +7,7 @@ function renderUserProfileBlock() {
             <div class="user__name">
                 User profile: <a href="profile.html">${item.name}</a>
             </div>
+            <a id="logout" href="javascript:void(0);">Logout</a>
         </div>
     `
 }

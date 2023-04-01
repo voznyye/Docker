@@ -1,15 +1,15 @@
 import {clean, cleanInputs} from "../modules/cleaner";
-import { bindInput } from "../modules/bindFunc";
-import { postRequest } from "../resources/resources";
+import {bindInput} from "../modules/bindFunc";
+import {postRequest} from "../resources/resources";
 import getToken from "../verification/verification";
 
 
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
-    function signIN(){
+    function signIN() {
         const state = {};
-        
+
         const signINButton = document.getElementById("form-sign_in-button"),
             formNameInput = document.getElementById("form-name-input"),
             formPasswordInput = document.getElementById("form-password-input");
@@ -20,37 +20,37 @@ window.addEventListener("DOMContentLoaded", () => {
         signINButton.addEventListener("click", event => {
             event.preventDefault();
             console.log(state);
-            if(!state.name || !state.password){
+            if (!state.name || !state.password) {
                 alert("Вы не зарегистрированы")
                 return;
             }
-    
-            if(event && event.target){
-                postRequest("http://127.0.0.1/api/login/", state, getToken("token"))
-                .then(response => {
-                    const timer = setTimeout(function delay(){
-                        if(response){
-                            if(response.error){
-                                alert(response.error);
+
+            if (event && event.target) {
+                postRequest(window.env.host + "/api/login/", state, getToken("token"))
+                    .then(response => {
+                        const timer = setTimeout(function delay() {
+                            if (response) {
+                                if (response.error) {
+                                    alert(response.error);
+                                    clearInterval(timer);
+                                    return;
+                                }
                                 clearInterval(timer);
-                                return;
-                            } 
-                            clearInterval(timer);
-                            // window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
-                            localStorage.removeItem("token");
-                            localStorage.removeItem("user_id");
-                            localStorage.removeItem("user_name");
-                            localStorage.setItem("token", response.hash);
-                            localStorage.setItem("user_id", response.user.id);
-                            localStorage.setItem("user_name", response.user.name);
-                            clean(state);
-                            cleanInputs("formInputs");
-                            location.href = 'users.html';
-                        } else {
-                            setTimeout(delay, 2000);
-                        }
-                    }, 2000)
-                })
+                                // window.open("file:///C:/OSPanel/domains/AEH-project/clients/users.html");
+                                localStorage.removeItem("token");
+                                localStorage.removeItem("user_id");
+                                localStorage.removeItem("user_name");
+                                localStorage.setItem("token", response.hash);
+                                localStorage.setItem("user_id", response.user.id);
+                                localStorage.setItem("user_name", response.user.name);
+                                clean(state);
+                                cleanInputs("formInputs");
+                                location.href = 'users.html';
+                            } else {
+                                setTimeout(delay, 2000);
+                            }
+                        }, 2000)
+                    })
             }
         })
 
