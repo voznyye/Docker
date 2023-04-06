@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function createItem(event){
         event.preventDefault();
 
-        if(!state.productName || !state.productDescription || !state.productPrice){
+        if(!state.name || !state.title || !state.price){
             alert("Заполните поля name, description, price");
             return;
         }

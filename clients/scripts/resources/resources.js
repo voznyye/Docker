@@ -2,7 +2,6 @@ import getToken from "../verification/verification";
 
 
 async function postRequest(url, data, header = getToken("token")) {
-    console.log(url);
     const result = await fetch(url, {
         method: "POST",
         body: JSON.stringify(data),
