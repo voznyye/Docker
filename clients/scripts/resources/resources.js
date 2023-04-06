@@ -2,6 +2,7 @@ import getToken from "../verification/verification";
 
 
 async function postRequest(url, data, header = getToken("token")) {
+    console.log(url);
     const result = await fetch(url, {
         method: "POST",
         body: JSON.stringify(data),
@@ -10,6 +11,10 @@ async function postRequest(url, data, header = getToken("token")) {
             ...header
         }
     })
+
+    if(!result.ok && result.status === 500){
+        throw new Error(result.statusText);
+    }
 
     console.log(result);
 

@@ -40,15 +40,42 @@
 					</div>
 				</div>
 				<form class="header__search" action="#">
-					<input autocomplete="off" type="text" name="form[]" data-error="Помилка" placeholder="Search..." class="input" />
-					<button type="submit" class="header__search-btn">
-						<img src="./images/search.svg" alt="" />
+					<input type="text" placeholder="write product id" name="id" id="search-input" class="input" />
+					<button type="submit" id="get-one" class="header__search-btn">
+						<img src="./images/search.svg" alt="search" />
 					</button>
 				</form>
 			</div>
 		</header>
 
 		<main class="page">
+			<div class="user">
+				<div class="user__container">
+					<div class="user__body">
+						<form action="" class="user__form">
+							<div class="user__form-input-block">
+								<input type="text" id="product-name" name="productName" placeholder="product name" class="input" />
+								<input type="text" id="product-description" name="productDescription" placeholder="product description" class="input" />
+								<input type="text" id="product-price" name="productPrice" placeholder="product price" class="input" />
+							</div>
+							<button class="user__button user__button-submit" id="create-new-item" type="submit">
+								Create new product
+							</button>
+						</form>
+						<div class="user__buttons">
+							<button class="user__button user__button-add" id="change-data">
+								Change Product
+							</button>
+							<button class="user__button user__button-edit" id="delete">
+								Delete product
+							</button>
+							<button class="user__button user__button-delete" id="get-all">
+								Get all products
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<section class="hero">
 				<div class="hero__container">
 					<div class="hero__body">
@@ -165,7 +192,7 @@
 	<script src="./build/config.js"></script>
 
 	<!-- Затем подгружаются остальные скрипты и видят новое добавленное свойство window.env.host -->
-	<script src="./build/scripts.js"></script>
+	<script src="./build/products.js"></script>
 </body>
 
 </html>

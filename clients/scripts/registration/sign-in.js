@@ -1,3 +1,6 @@
+require("es6-promise").polyfill();
+import "nodelist-foreach-polyfill";
+
 import {clean, cleanInputs} from "../modules/cleaner";
 import { bindInput } from "../modules/bindFunc";
 import { postRequest } from "../resources/resources";
@@ -23,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             console.log(state);
             if(!state.name || !state.password){
-                alert("Вы не зарегистрированы")
+                alert("Заполните поля name и password");
                 return;
             }
     

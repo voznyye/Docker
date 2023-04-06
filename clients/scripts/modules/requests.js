@@ -10,10 +10,10 @@ function requests() {
         nameInput = document.getElementById("user-name"),
         passwordInput = document.getElementById("user-password"),
 
-        getOneUserButton = document.getElementById("get-one-user"),
-        getAllUsersButton = document.getElementById("get-all-users"),
-        changeUserDataButton = document.getElementById("change-user-data"),
-        deleteUserButton = document.getElementById("delete-user"),
+        getOneUserButton = document.getElementById("get-one"),
+        getAllUsersButton = document.getElementById("get-all"),
+        changeUserDataButton = document.getElementById("change-data"),
+        deleteUserButton = document.getElementById("delete"),
 
         userBox = document.getElementById("user-box");
 

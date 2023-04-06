@@ -1,6 +1,6 @@
 import {renderUserProfileBlock} from "../component/userProfileBlock";
 
-function currentUserInit() {
+function currentUserInit(page) {
     if (localStorage && localStorage.getItem('user_id')) {
         let block = document.getElementsByClassName('header__buttons')
         if (block.length) {
@@ -10,7 +10,7 @@ function currentUserInit() {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user_id");
                 localStorage.removeItem("user_name");
-                location.href = 'home.html';
+                location.href = `${page}.html`;
             })
         }
     }
