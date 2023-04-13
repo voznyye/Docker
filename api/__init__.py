@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 
-from api import user, login
+from api import user, login, products
 from api.user import db
 
 
@@ -15,6 +15,7 @@ def create_api():
     CORS(app_flask)
     app_flask.register_blueprint(user.bp)
     app_flask.register_blueprint(login.bp)
+    app_flask.register_blueprint(products.bp)
     db.init_app(app_flask)
 
     return app_flask
