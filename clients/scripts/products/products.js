@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     function changeProduct(event){
-        if(!state.newProductChanges.id || ((!state.newProductChanges.name && !state.newProductChanges.title && !state.newProductChanges.price))){
+        if(!searchInput.value || ((!productNameInput.value && !productDescriptionInput.value && !productPriceInput.value))){
             alert("Обязательно заполните поля id, и один из трех полей ниже, чтобы изменить информацию о продукте!");
             return;
         }
@@ -114,6 +114,20 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function searchProduct(event){
+        if(!searchInput.value){
+            alert("Укажите id продукта");
+            return;
+        }
+
+        if(event && event.target){
+            request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
+            .then(response => {
+                console.log(response);
+            })
+        }
+    }
+
     function cleanProducts() {
         productsContainer.innerHTML = "";
     }
@@ -125,5 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
     changeButton.addEventListener("click", changeProduct.bind(this));
 
     deleteButton.addEventListener("click", deleteProduct.bind(this));
+
+    searchButton.addEventListener("click", searchProduct.bind(this));
 
 })
