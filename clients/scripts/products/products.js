@@ -2,15 +2,14 @@ require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
 import { bindInput } from "../modules/bindFunc";
-import { postRequest } from "../resources/resources";
+import { postRequest, request } from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
+import { renderProductCard } from "../modules/render";
 import getToken from "../verification/verification";
 
 
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
-
-    currentUserInit("products");
 
     const searchInput  = document.getElementById("search-input"),
         productNameInput = document.getElementById("product-name"),
@@ -21,7 +20,11 @@ window.addEventListener("DOMContentLoaded", () => {
         createButton = document.getElementById("create-new-item"),
         changeButton = document.getElementById("change-data"),
         deleteButton = document.getElementById("delete"),
-        getAllButton = document.getElementById("get-all");
+        getAllButton = document.getElementById("get-all"),
+
+        productsContainer = document.getElementById("products-hero");
+
+
 
     const state = {};
 
@@ -30,6 +33,9 @@ window.addEventListener("DOMContentLoaded", () => {
         get: "GET",
         delete: "DELETE"
     }
+
+    currentUserInit("products");
+    cleanProductsContainer();
 
     bindInput(state, searchInput);
     bindInput(state, productNameInput);
@@ -50,6 +56,19 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function getAllProducts(event) {
+        if(event && event.target){
+            request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
+            .then(response => response.map(item => productsContainer.innerHTML += renderProductCard(item)));
+        }
+    }
+
+    function cleanProductsContainer() {
+        productsContainer.innerHTML = "";
+    }
+
     createButton.addEventListener("click", createItem.bind(this));
+
+    getAllButton.addEventListener("click", getAllProducts.bind(this));
 
 })

@@ -41,9 +41,9 @@ window.addEventListener("DOMContentLoaded", () => {
                             // Переход на другую страницу, не обновляя текущую страницу
                             location.href = 'log-in.html';
                         } else {
-                            setTimeout(delay, 3000);
+                            setTimeout(delay, 5000);
                         }
-                    }, 3000)
+                    }, 5000)
 
                 })
                 .catch(error => alert(error));

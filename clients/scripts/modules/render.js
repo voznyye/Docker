@@ -13,5 +13,24 @@ function sortUsersID(arr){
     return arr.sort((a, b) => a.id - b.id);
 }
 
+function renderProductCard(item){
+    return  `
+        <div class="hero__product product-hero">
+            <h3 class="product-hero__title">${item.name}</h3>
+            <div class="product-hero__img">
+                <picture><source srcset=${item.img ?? "./images/Ehor.jpg"} type="image/webp"><img src=${item.img ?? "./images/Ehor.jpg"} alt="product image" /></picture>
+            </div>
+            <div class="product-hero__descr">
+                <p>
+                    ${item.title}
+                </p>
+            </div>
+            <div class="product-hero__block">
+                <a class="product-hero__buy" href="#">Buy</a>
+            </div>
+        </div>
+    `
+}
 
-export {renderUserCard, sortUsersID};
+
+export {renderUserCard, sortUsersID, renderProductCard};

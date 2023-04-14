@@ -51,9 +51,9 @@ window.addEventListener("DOMContentLoaded", () => {
                             location.href = 'users.html';
                             console.log(response);
                         } else {
-                            setTimeout(delay, 2000);
+                            setTimeout(delay, 5000);
                         }
-                    }, 2000)
+                    }, 5000)
                 })
             }
         }
