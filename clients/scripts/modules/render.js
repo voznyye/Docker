@@ -1,6 +1,6 @@
 
 function randomPath() {
-    const path = ["./images/Ehor.jpg", "./images/ricardo.jpg"];
+    const path = ["./images/Ehor.jpg", "./images/ricardo.jpg", "./images/Andrii.jpg"];
     const num = Math.floor(Math.random() * path.length);
 
     return path[num];

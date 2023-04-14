@@ -15,6 +15,11 @@ function cleanInputs(nameFlag) {
             document.getElementById("user-name").value = "";
             document.getElementById("user-password").value = "";
         break;
+        case "productInputs":
+            document.getElementById("search-input").value = "";
+            document.getElementById("product-name").value = "";
+            document.getElementById("product-description").value = "";
+            document.getElementById("product-price").value = "";
     }
 }
 

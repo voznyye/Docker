@@ -54,7 +54,7 @@ def update_user(product_id):
     if not name and not price and not title:
         return jsonify({'error': 'name, price and/or title are required'}), 400
 
-    row = price.findProductById(product_id)
+    row = product.findProductById(product_id)
 
     if row is None:
         return jsonify({'error': f'User with ID {product_id} not found'}), 404

@@ -5,6 +5,7 @@ import { bindInput } from "../modules/bindFunc";
 import { postRequest, request, changeData} from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
 import { renderProductCard } from "../modules/render";
+import { cleanInputs } from "../modules/cleaner";
 import getToken from "../verification/verification";
 
 
@@ -23,8 +24,6 @@ window.addEventListener("DOMContentLoaded", () => {
         getAllButton = document.getElementById("get-all"),
 
         productsContainer = document.getElementById("products-hero");
-
-
 
     const state = {
         products: [],
@@ -48,14 +47,17 @@ window.addEventListener("DOMContentLoaded", () => {
     function createItem(event){
         event.preventDefault();
 
-        if(!state.name || !state.title || !state.price){
+        if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
             alert("Заполните поля name, description, price");
             return;
         }
 
         if(event && event.target){
-            postRequest(`${window.env.host}/api/products/`, state, getToken("token"))
-            .then(response => console.log(response));
+            postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
+            .then(response => {
+                console.log(response)
+                cleanInputs("productInputs");
+            });
         }
     }
 
@@ -82,34 +84,38 @@ window.addEventListener("DOMContentLoaded", () => {
                 const timer = setTimeout(function delay(){
                     if(response){
                         clearInterval(timer);
-                        console.log("clear");
                         if(response.error){
                             alert(response.error);
-                            console.log("1");
                         } else {
                             alert(response.message);
-                            state.products = state.products = state.products.map(item => {
-                                if(item.id == +state.newProductChanges.id){
-                                    const newItem = Object.fromEntries(Object.entries(state.newProductChanges).filter(obj => obj[1]));
-                                    return {id: +item.id, ...newItem};
-                                }
-                                return item;
-                            })
-                            state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-                            console.log("2");
+                            getAllButton.click();
+                            cleanInputs("productInputs");
                         }
                     } else {
                         setTimeout(delay, 5000)
-                        console.log("3");
                     }
                 }, 5000)
             });
         }
     }
 
+    function deleteProduct(event){
+        if(!searchInput.value){
+            alert("Укажите id продукта");
+            return;
+        }
+
+        if(event && event.target){
+            request(methods.delete, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
+            .then(response => {
+                alert(response.message);
+                getAllButton.click();
+            });
+        }
+    }
+
     function cleanProducts() {
         productsContainer.innerHTML = "";
-        state.products = [];
     }
 
     createButton.addEventListener("click", createItem.bind(this));
@@ -117,5 +123,7 @@ window.addEventListener("DOMContentLoaded", () => {
     getAllButton.addEventListener("click", getAllProducts.bind(this));
 
     changeButton.addEventListener("click", changeProduct.bind(this));
+
+    deleteButton.addEventListener("click", deleteProduct.bind(this));
 
 })
