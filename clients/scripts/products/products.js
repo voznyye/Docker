@@ -77,7 +77,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
         if(event && event.target){
-            changeData(`${window.env.host}/api/products/${state.id}`, {name: state.newProductChanges.name, price: state.newProductChanges.price, title: state.newProductChanges.title}, getToken("token"))
+            changeData(`${window.env.host}/api/products/${state.newProductChanges.id}`, {name: state.newProductChanges.name, price: state.newProductChanges.price, title: state.newProductChanges.title}, getToken("token"))
             .then(response => {
                 const timer = setTimeout(function delay(){
                     if(response){
