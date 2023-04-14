@@ -35,13 +35,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 .then(response => {
                     const timer = setTimeout(function delay(){
                         if(response){
+                            clearInterval(timer);
                             if(response.error){
                                 alert(response.error);
-                                clearInterval(timer);
                                 return;
-                            } 
-                            clearInterval(timer);
-
+                            }
                             updateLocalStorage("token", response.hash);
                             updateLocalStorage("user_id", response.user.id)
                             updateLocalStorage("user_name", response.user.name)
