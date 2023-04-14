@@ -82,8 +82,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 const timer = setTimeout(function delay(){
                     if(response){
                         clearInterval(timer);
+                        console.log("clear");
                         if(response.error){
                             alert(response.error);
+                            console.log("1");
                         } else {
                             alert(response.message);
                             state.products = state.products = state.products.map(item => {
@@ -94,9 +96,11 @@ window.addEventListener("DOMContentLoaded", () => {
                                 return item;
                             })
                             state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                            console.log("2");
                         }
                     } else {
                         setTimeout(delay, 5000)
+                        console.log("3");
                     }
                 }, 5000)
             });
