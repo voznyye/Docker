@@ -108,16 +108,30 @@ function requests() {
                 password: state.password
             }, getToken("token"))
             .then(response => {
-                console.log(response);
-                state.usersData = state.usersData.map(item => {
-                    if (state.id == item.id) {
-                        return {...item, name: state.name}
+                const timerID = setTimeout(function delay(){
+                    if(response){
+                        if(response.error){
+                            clearInterval(timerID);
+                            alert(response.message);
+                        } else {
+                            clearInterval(timerID);
+                            alert(response.message);
+                            console.log(response);
+                            state.usersData = state.usersData.map(item => {
+                                if (state.id == item.id) {
+                                    return {...item, name: state.name}
+                                }
+                                return item;
+                            })
+                            userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
+                            cleanThisState();
+                            cleanInputs("userInputs");
+                        }
+                    } else {
+                        setTimeout(delay, 4000);
                     }
-                    return item;
-                })
-                userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                cleanThisState();
-                cleanInputs("userInputs");
+                }, 4000)
+
             })
         }
     }

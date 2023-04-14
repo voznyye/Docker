@@ -2,7 +2,7 @@ require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
 import { bindInput } from "../modules/bindFunc";
-import { postRequest, request } from "../resources/resources";
+import { postRequest, request, changeData} from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
 import { renderProductCard } from "../modules/render";
 import getToken from "../verification/verification";
@@ -26,7 +26,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-    const state = {};
+    const state = {
+        products: [],
+        newProductChanges: {}
+    };
 
     // магический строк 
     const methods = {
@@ -35,12 +38,12 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     currentUserInit("products");
-    cleanProductsContainer();
+    cleanProducts();
 
-    bindInput(state, searchInput);
-    bindInput(state, productNameInput);
-    bindInput(state, productDescriptionInput);
-    bindInput(state, productPriceInput);
+    bindInput(state.newProductChanges, searchInput);
+    bindInput(state.newProductChanges, productNameInput);
+    bindInput(state.newProductChanges, productDescriptionInput);
+    bindInput(state.newProductChanges, productPriceInput);
 
     function createItem(event){
         event.preventDefault();
@@ -59,16 +62,56 @@ window.addEventListener("DOMContentLoaded", () => {
     function getAllProducts(event) {
         if(event && event.target){
             request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
-            .then(response => response.map(item => productsContainer.innerHTML += renderProductCard(item)));
+            .then(response => {
+                cleanProducts();
+                state.products = response;
+                state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                console.log(state.products);
+            });
         }
     }
 
-    function cleanProductsContainer() {
+    function changeProduct(event){
+        if(!state.newProductChanges.id || ((!state.newProductChanges.name && !state.newProductChanges.title && !state.newProductChanges.price))){
+            alert("Обязательно заполните поля id, и один из трех полей ниже, чтобы изменить информацию о продукте!");
+            return;
+        }
+        if(event && event.target){
+            changeData(`${window.env.host}/api/products/${state.id}`, {name: state.newProductChanges.name, price: state.newProductChanges.price, title: state.newProductChanges.title}, getToken("token"))
+            .then(response => {
+                const timer = setTimeout(function delay(){
+                    if(response){
+                        clearInterval(timer);
+                        if(response.error){
+                            alert(response.error);
+                        } else {
+                            alert(response.message);
+                            state.products = state.products = state.products.map(item => {
+                                if(item.id == +state.newProductChanges.id){
+                                    const newItem = Object.fromEntries(Object.entries(state.newProductChanges).filter(obj => obj[1]));
+                                    return {id: +item.id, ...newItem};
+                                }
+                                return item;
+                            })
+                            state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                        }
+                    } else {
+                        setTimeout(delay, 5000)
+                    }
+                }, 5000)
+            });
+        }
+    }
+
+    function cleanProducts() {
         productsContainer.innerHTML = "";
+        state.products = [];
     }
 
     createButton.addEventListener("click", createItem.bind(this));
 
     getAllButton.addEventListener("click", getAllProducts.bind(this));
+
+    changeButton.addEventListener("click", changeProduct.bind(this));
 
 })

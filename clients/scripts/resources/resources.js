@@ -54,8 +54,15 @@ async function changeData(url, data, header){
         }
     })
 
+    if(result.status === 500){
+        throw new Error(result.statusText);
+    }
+
+    console.log(result);
+    
     return await result.json();
 }
+
 
 export {request, postRequest, changeData};
 

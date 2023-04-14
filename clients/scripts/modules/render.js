@@ -1,3 +1,11 @@
+
+function randomPath() {
+    const path = ["./images/Ehor.jpg", "./images/ricardo.jpg"];
+    const num = Math.floor(Math.random() * path.length);
+
+    return path[num];
+}
+
 function renderUserCard(item) {
     return `
         <div class="user__block">
@@ -14,15 +22,20 @@ function sortUsersID(arr){
 }
 
 function renderProductCard(item){
+    const path = randomPath();
     return  `
         <div class="hero__product product-hero">
-            <h3 class="product-hero__title">${item.name}</h3>
+            <h3 class="product-hero__title">${item.name}, id - ${item.id}</h3>
             <div class="product-hero__img">
-                <picture><source srcset=${item.img ?? "./images/Ehor.jpg"} type="image/webp"><img src=${item.img ?? "./images/Ehor.jpg"} alt="product image" /></picture>
+                <picture><source srcset=${item.img ?? path} type="image/webp"><img src=${item.img ?? path} alt="product image" /></picture>
             </div>
             <div class="product-hero__descr">
                 <p>
                     ${item.title}
+                </p>
+                <br>
+                <p>
+                    ${item.price}zł
                 </p>
             </div>
             <div class="product-hero__block">

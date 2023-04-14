@@ -1,6 +1,6 @@
 
 # for init database, only once
-run: 
+nf: 
 	flask --app run init-db
 # for init api 
 run:
