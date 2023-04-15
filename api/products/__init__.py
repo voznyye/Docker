@@ -40,7 +40,7 @@ def get_user(product_id):
     if row is None:
         return jsonify({'error': f'Product with ID {product_id} not found'}), 404
 
-    return jsonify({'id': row['id'], 'name': row['name']}), 200
+    return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title']}), 200
 
 
 @bp.route('/<int:product_id>', methods=['PUT'])

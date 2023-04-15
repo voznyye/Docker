@@ -10,7 +10,7 @@ class Product(Resource):
     def findProductById(self, product_id):
         """Get a user by ID"""
         user_db = get_db()
-        return user_db.execute('SELECT id, name FROM products WHERE id=?', (product_id,)).fetchone()
+        return user_db.execute('SELECT id, name, price, title FROM products WHERE id=?', (product_id,)).fetchone()
 
     def findByName(self, name):
         return get_db().execute('SELECT * FROM products WHERE name=?', (name,)).fetchone()

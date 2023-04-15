@@ -53,15 +53,20 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         if(event && event.target){
+            event.target.disabled = true;
             postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
             .then(response => {
                 console.log(response)
                 cleanInputs("productInputs");
+                getAllButton.click();
+                event.target.disabled = false;
             });
         }
+
     }
 
     function getAllProducts(event) {
+        event.target.disabled = true;
         if(event && event.target){
             request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
             .then(response => {
@@ -69,6 +74,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 state.products = response;
                 state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
                 console.log(state.products);
+                event.target.disabled = false;
             });
         }
     }
@@ -79,11 +85,13 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
         if(event && event.target){
+            event.target.disabled = true;
             changeData(`${window.env.host}/api/products/${state.newProductChanges.id}`, {name: state.newProductChanges.name, price: state.newProductChanges.price, title: state.newProductChanges.title}, getToken("token"))
             .then(response => {
                 const timer = setTimeout(function delay(){
                     if(response){
                         clearInterval(timer);
+                        event.target.disabled = false;
                         if(response.error){
                             alert(response.error);
                         } else {
@@ -106,24 +114,36 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         if(event && event.target){
+            event.target.disabled = true;
             request(methods.delete, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
             .then(response => {
                 alert(response.message);
                 getAllButton.click();
+                event.target.disabled = false;
             });
         }
     }
 
     function searchProduct(event){
+        event.preventDefault();
         if(!searchInput.value){
             alert("Укажите id продукта");
             return;
         }
 
         if(event && event.target){
+            event.target.disabled = true;
             request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
             .then(response => {
-                console.log(response);
+                event.target.disabled = false;
+                if(response.error){
+                    alert(response.error);
+                } else {
+                    cleanProducts();
+                    console.log(response);
+                    state.products = [{...response}];
+                    state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                }
             })
         }
     }
