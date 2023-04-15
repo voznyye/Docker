@@ -97,7 +97,7 @@ function requests() {
     }
 
     function changeUserData(event){
-        if (!state.id || !state.name || !state.password) {
+        if (!state.id || (!state.name && !state.password)) {
             alert("Нужно заполнить графы id, имя и пароль")
             return;
         }
