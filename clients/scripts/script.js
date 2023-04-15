@@ -8,6 +8,6 @@ window.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
     requests();
-    currentUserInit("sign-up");
-
+    currentUserInit("log-in");
+    
 })
