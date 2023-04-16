@@ -1,42 +1,40 @@
-import {changeData, request} from "../resources/resources";
+import {changeData} from "../resources/resources";
 import getToken from "../verification/verification";
 import {cleanInputs} from "./cleaner";
 import {bindInput} from "./bindFunc";
-import {renderUserCard, sortUsersID} from "./render";
-
 
 function requests() {
-    const idInput = document.getElementById("user-id"),
-        nameInput = document.getElementById("user-name"),
-        passwordInput = document.getElementById("user-password"),
-        changeUserDataButton = document.getElementById("change-data");
+    const  nameInput = document.getElementById("user-name"),
+            passwordInput = document.getElementById("user-password"),
+            changeUserDataButton = document.getElementById("change-data");
 
     const state = {
-        id: "",
         name: "",
         password: "",
     };
 
-    bindInput(state, idInput);
     bindInput(state, nameInput);
     bindInput(state, passwordInput);
 
     function cleanThisState() {
-        state.id = "";
         state.name = "",
         state.password = "";
+    }
+
+    function getID() {
+        return localStorage.getItem("user_id");
     }
 
     function changeUserData(event){
         event.preventDefault();
         
-        if (!state.id || (!state.name && !state.password)) {
+        if (!state.name || !state.password) {
             alert("Нужно заполнить графы id, имя и пароль")
             return;
         }
 
         if (event && event.target) {
-            changeData(`${window.env.host}/api/user/${state.id}`, {
+            changeData(`${window.env.host}/api/user/${getID()}`, {
                 name: state.name,
                 password: state.password
             }, getToken("token"))
@@ -51,6 +49,7 @@ function requests() {
                             alert(response.message);
                             cleanThisState();
                             cleanInputs("userInputs");
+                            location.href="log-in.html";
                         }
                     } else {
                         setTimeout(delay, 4000);

@@ -11,7 +11,6 @@ function cleanInputs(nameFlag) {
             document.getElementById("form-password-input").value = "";
         break;
         case "userInputs": 
-            document.getElementById("user-id").value = "";
             document.getElementById("user-name").value = "";
             document.getElementById("user-password").value = "";
         break;
