@@ -20,9 +20,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
         searchButton = document.getElementById("get-one"),
         createButton = document.getElementById("create-new-item"),
-        changeButton = document.getElementById("change-data"),
-        deleteButton = document.getElementById("delete"),
-        getAllButton = document.getElementById("get-all"),
 
         productsContainer = document.getElementById("products-hero");
 
@@ -31,14 +28,13 @@ window.addEventListener("DOMContentLoaded", () => {
         newProductChanges: {}
     };
 
-    // магический строк 
     const methods = {
-        get: "GET",
-        delete: "DELETE"
+        get: "GET"
     }
 
     currentUserInit("products");
     cleanProducts();
+    createProducts();
 
     bindInput(state.newProductChanges, searchInput);
     bindInput(state.newProductChanges, productNameInput);
@@ -49,27 +45,75 @@ window.addEventListener("DOMContentLoaded", () => {
     function createItem(event){
         event.preventDefault();
 
-        // if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
-        //     alert("Заполните поля name, description, price");
-        //     return;
-        // }
+        if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
+            alert("Заполните поля name, description, price");
+            return;
+        }
 
         if(event && event.target){
-            // event.target.disabled = true;
-            // postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
-            // .then(response => {
-            //     cleanInputs("productInputs");
-            //     getAllButton.click();
-            //     event.target.disabled = false;
-            // });
+            event.target.disabled = true;
+            postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
+            .then(response => {
+                console.log(response);
+                cleanInputs("productInputs");
+                createProducts();
+                event.target.disabled = false;
+            });
         }
     }
 
-    function getAllProducts(event) {
+    function searchProduct(event){
+        event.preventDefault();
+        if(!searchInput.value){
+            alert("Укажите id продукта");
+            return;
+        }
+
+        if(event && event.target){
+            event.target.disabled = true;
+            request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
+            .then(response => {
+                event.target.disabled = false;
+                if(response.error){
+                    alert(response.error);
+                } else {
+                    cleanProducts();
+                    state.products = [{...response}];
+                    state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                }
+            })
+        }
+    }
+
+    function createProducts() {
+        request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
+        .then(response => {
+            console.log(response);
+            cleanProducts();
+            state.products = response;
+            state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+        });
+    }
+
+    function cleanProducts() {
+        productsContainer.innerHTML = "";
+    }
+
+    createButton.addEventListener("click", createItem.bind(this));
+
+    searchButton.addEventListener("click", searchProduct.bind(this));
+
+
+    // For admin page
+/*     changeButton = document.getElementById("change-data"),
+    deleteButton = document.getElementById("delete"),
+    getAllButton = document.getElementById("get-all"), */
+/*     function getAllProducts(event) {
         event.target.disabled = true;
         if(event && event.target){
             request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
             .then(response => {
+                console.log(response);
                 cleanProducts();
                 state.products = response;
                 state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
@@ -121,43 +165,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 event.target.disabled = false;
             });
         }
-    }
+    } */
 
-    function searchProduct(event){
-        event.preventDefault();
-        if(!searchInput.value){
-            alert("Укажите id продукта");
-            return;
-        }
 
-        if(event && event.target){
-            event.target.disabled = true;
-            request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
-            .then(response => {
-                event.target.disabled = false;
-                if(response.error){
-                    alert(response.error);
-                } else {
-                    cleanProducts();
-                    state.products = [{...response}];
-                    state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-                }
-            })
-        }
-    }
 
-    function cleanProducts() {
-        productsContainer.innerHTML = "";
-    }
-
-    createButton.addEventListener("click", createItem.bind(this));
-
-    getAllButton.addEventListener("click", getAllProducts.bind(this));
+    // For admin page
+/*     getAllButton.addEventListener("click", getAllProducts.bind(this));
 
     changeButton.addEventListener("click", changeProduct.bind(this));
 
-    deleteButton.addEventListener("click", deleteProduct.bind(this));
+    deleteButton.addEventListener("click", deleteProduct.bind(this)); */
 
-    searchButton.addEventListener("click", searchProduct.bind(this));
 
 })

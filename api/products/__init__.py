@@ -10,7 +10,7 @@ product = Product()
 
 @bp.route('/', methods=['GET'])
 @token_required
-def get_users():
+def get_products():
     """Get all products"""
     return jsonify(product.getProducts()), 200
 
@@ -21,31 +21,43 @@ def create_product():
     name = request.json.get('name')
     price = request.json.get('price')
     title = request.json.get('title')
+    image = request.json.get('image')
     if not name or not price or not title:
         return jsonify({'error': 'name, price and title are required'}), 400
 
     try:
-        product.createProduct(name, price, title)
+        product.createProduct(name, price, title, image)
     except Exception as e:
-        return jsonify({'error': f"{e}"}), 500 # error
+        return jsonify({'error': f"{e}"}), 500  # error
 
     return jsonify({'message': f'Product {name} created'}), 201
 
 
+@bp.route('/<string:name>', methods=['GET'])
+@token_required
+def get_product_by_name(name):
+    row = product.findByName(name)
+
+    if row is not None:
+        return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'], 'image': row['image'], 'status': row['status']}), 200
+
+    return jsonify({'error': f'Product with name {name} not found'}), 404
+
+
 @bp.route('/<int:product_id>', methods=['GET'])
 @token_required
-def get_user(product_id):
+def get_product_by_id(product_id):
     row = product.findProductById(product_id)
 
     if row is None:
         return jsonify({'error': f'Product with ID {product_id} not found'}), 404
 
-    return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title']}), 200
+    return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'], 'image': row['image'], 'status': row['status']}), 200
 
 
 @bp.route('/<int:product_id>', methods=['PUT'])
 @token_required
-def update_user(product_id):
+def update_product(product_id):
     """Update a product"""
     name = request.json.get('name')
     price = request.json.get('price')
@@ -66,7 +78,7 @@ def update_user(product_id):
 
 @bp.route('/<int:product_id>', methods=['DELETE'])
 @token_required
-def delete_user(product_id):
+def delete_product(product_id):
     row = product.findProductById(product_id)
 
     if row is None:

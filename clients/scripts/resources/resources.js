@@ -1,5 +1,5 @@
 import getToken from "../verification/verification";
-import { createMessage } from "../component/renderMessages";
+
 async function postRequest(url, data, header = getToken("token")) {
     const result = await fetch(url, {
         method: "POST",
@@ -11,10 +11,9 @@ async function postRequest(url, data, header = getToken("token")) {
     })
 
     if(!result.ok && result.status === 500){
-        message.textContent = messages.failed;
-        message.remove();
         throw new Error(result.statusText);
     }
+
 
     return await result.json();
 }   

@@ -20,6 +20,7 @@ function cleanInputs(nameFlag) {
             document.getElementById("product-name").value = "";
             document.getElementById("product-description").value = "";
             document.getElementById("product-price").value = "";
+            document.getElementById("product-img").value = "";
     }
 }
 

@@ -27,7 +27,7 @@ function renderProductCard(item){
         <div class="hero__product product-hero">
             <h3 class="product-hero__title">${item.name}, id - ${item.id}</h3>
             <div class="product-hero__img">
-                <picture><source srcset=${item.img ?? path} type="image/webp"><img src=${item.img ?? path} alt="product image" /></picture>
+                <picture><source srcset=${item.image ?? path} type="image/webp"><img src=${item.image ?? path} alt="product image" /></picture>
             </div>
             <div class="product-hero__descr">
                 <p>
@@ -39,7 +39,7 @@ function renderProductCard(item){
                 </p>
             </div>
             <div class="product-hero__block">
-                <a class="product-hero__buy" href="#">Buy</a>
+                <a class="product-hero__buy" href="#">add</a>
             </div>
         </div>
     `
