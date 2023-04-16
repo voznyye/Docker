@@ -58,12 +58,10 @@ window.addEventListener("DOMContentLoaded", () => {
             // event.target.disabled = true;
             // postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
             // .then(response => {
-            //     console.log(response)
             //     cleanInputs("productInputs");
             //     getAllButton.click();
             //     event.target.disabled = false;
             // });
-            console.log(state.newProductChanges);
         }
     }
 
@@ -75,7 +73,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 cleanProducts();
                 state.products = response;
                 state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-                console.log(state.products);
                 event.target.disabled = false;
             });
         }
@@ -142,7 +139,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     alert(response.error);
                 } else {
                     cleanProducts();
-                    console.log(response);
                     state.products = [{...response}];
                     state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
                 }
@@ -165,13 +161,3 @@ window.addEventListener("DOMContentLoaded", () => {
     searchButton.addEventListener("click", searchProduct.bind(this));
 
 })
-
-// body: JSON.stringify({
-//     bill:{
-//         "user": {"id": 1},
-//         "order": [
-//             {"product": 1, "quantity": 5, "currency": "USD"},
-//             {"product": 2, "quantity": 2, "currency": "USD"},
-//         ]
-//     }
-// })

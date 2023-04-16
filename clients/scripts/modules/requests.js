@@ -48,7 +48,6 @@ function requests() {
                 if (response.length > 0) {
                     state.usersData = response;
                     userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                    console.log(state.usersData);
                 } else {
                     userBox.innerHTML = "Нет пользователей";
                 }
@@ -71,7 +70,6 @@ function requests() {
                     alert(response.error);
                     return;
                 }
-                console.log(response);
                 userBox.innerHTML = renderUserCard(response);
             })
         }
@@ -89,7 +87,6 @@ function requests() {
                 alert(response.message);
                 state.usersData = state.usersData.filter(item => item.id !== +state.id);
                 userBox.innerHTML = sortUsersID(state.usersData).map(item => renderUserCard(item));
-                console.log(state.usersData);
                 cleanThisState();
                 cleanInputs("userInputs");
             })
@@ -116,7 +113,6 @@ function requests() {
                         } else {
                             clearInterval(timerID);
                             alert(response.message);
-                            console.log(response);
                             state.usersData = state.usersData.map(item => {
                                 if (state.id == item.id) {
                                     return {...item, name: state.name}

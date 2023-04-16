@@ -6,6 +6,8 @@ import {bindInput} from "../modules/bindFunc";
 import {postRequest} from "../resources/resources";
 import getToken from "../verification/verification";
 
+import { Message } from "../component/renderMessages";
+
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
@@ -28,25 +30,32 @@ window.addEventListener("DOMContentLoaded", () => {
             }
 
             if (event && event.target) {
+                Message.createMessage(".sign__title");
+                Message.addMessage("Please wait...");
+
                 postRequest(`${window.env.host}/api/user/`, state, getToken("token"))
                 .then(response => {
                     const timer = setTimeout(function delay() {
                         if (response) {
                             clearInterval(timer);
-                            console.log(response.message);
-
+                            Message.addMessage("success");
                             clean(state);
                             cleanInputs("formInputs");
 
                             // Переход на другую страницу, не обновляя текущую страницу
                             location.href = 'log-in.html';
+                            setTimeout(() => Message.deleteMessage(), 5000);
                         } else {
                             setTimeout(delay, 5000);
                         }
                     }, 5000)
 
                 })
-                .catch(error => alert(error));
+                .catch(error => {
+                    alert(error)
+                    Message.addMessage("failed");
+                    setTimeout(() => Message.deleteMessage(), 5000);
+                });
             }
         }
 

@@ -6,7 +6,7 @@ import { bindInput } from "../modules/bindFunc";
 import { postRequest } from "../resources/resources";
 import getToken from "../verification/verification";
 import { updateLocalStorage } from "../verification/verification";
-
+import { Message } from "../component/renderMessages";
 
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
@@ -24,22 +24,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
         function sendRequest(event){
             event.preventDefault();
-            console.log(state);
             if(!state.name || !state.password){
                 alert("Заполните поля name и password");
                 return;
             }
     
             if(event && event.target){
+                Message.createMessage(".sign__title");
+                Message.addMessage("Please wait...");
+
                 postRequest(`${window.env.host}/api/login/`, state, getToken("token"))
                 .then(response => {
                     const timer = setTimeout(function delay(){
                         if(response){
                             clearInterval(timer);
                             if(response.error){
+                                Message.addMessage("failed");
+                                setTimeout(() => Message.deleteMessage(), 5000);
                                 alert(response.error);
                                 return;
                             }
+                            Message.addMessage("success");
                             updateLocalStorage("token", response.hash);
                             updateLocalStorage("user_id", response.user.id)
                             updateLocalStorage("user_name", response.user.name)
@@ -47,7 +52,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             cleanInputs("formInputs");
                             // Переход на другую страницу, не обновляя текущую страницу
                             location.href = 'users.html';
-                            console.log(response);
+                            setTimeout(() => Message.deleteMessage(), 5000);
                         } else {
                             setTimeout(delay, 5000);
                         }
