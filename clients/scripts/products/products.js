@@ -16,6 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
         productNameInput = document.getElementById("product-name"),
         productDescriptionInput = document.getElementById("product-description"),
         productPriceInput = document.getElementById("product-price"),
+        productImageInput = document.getElementById("product-img"),
 
         searchButton = document.getElementById("get-one"),
         createButton = document.getElementById("create-new-item"),
@@ -43,26 +44,27 @@ window.addEventListener("DOMContentLoaded", () => {
     bindInput(state.newProductChanges, productNameInput);
     bindInput(state.newProductChanges, productDescriptionInput);
     bindInput(state.newProductChanges, productPriceInput);
+    bindInput(state.newProductChanges, productImageInput);
 
     function createItem(event){
         event.preventDefault();
 
-        if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
-            alert("Заполните поля name, description, price");
-            return;
-        }
+        // if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
+        //     alert("Заполните поля name, description, price");
+        //     return;
+        // }
 
         if(event && event.target){
-            event.target.disabled = true;
-            postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
-            .then(response => {
-                console.log(response)
-                cleanInputs("productInputs");
-                getAllButton.click();
-                event.target.disabled = false;
-            });
+            // event.target.disabled = true;
+            // postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
+            // .then(response => {
+            //     console.log(response)
+            //     cleanInputs("productInputs");
+            //     getAllButton.click();
+            //     event.target.disabled = false;
+            // });
+            console.log(state.newProductChanges);
         }
-
     }
 
     function getAllProducts(event) {
@@ -163,3 +165,13 @@ window.addEventListener("DOMContentLoaded", () => {
     searchButton.addEventListener("click", searchProduct.bind(this));
 
 })
+
+// body: JSON.stringify({
+//     bill:{
+//         "user": {"id": 1},
+//         "order": [
+//             {"product": 1, "quantity": 5, "currency": "USD"},
+//             {"product": 2, "quantity": 2, "currency": "USD"},
+//         ]
+//     }
+// })
