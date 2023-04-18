@@ -1,8 +1,8 @@
 require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
-import { bindInput } from "../modules/bindFunc";
-import { postRequest, request, changeData} from "../resources/resources";
+import { bindInput, bindImageInput} from "../modules/bindFunc";
+import { postRequest, request} from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
 import { renderProductCard } from "../modules/render";
 import { cleanInputs } from "../modules/cleaner";
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
     bindInput(state.newProductChanges, productNameInput);
     bindInput(state.newProductChanges, productDescriptionInput);
     bindInput(state.newProductChanges, productPriceInput);
-    bindInput(state.newProductChanges, productImageInput);
+    bindImageInput(state.newProductChanges, productImageInput);
 
     function createItem(event){
         event.preventDefault();
@@ -90,8 +90,10 @@ window.addEventListener("DOMContentLoaded", () => {
         .then(response => {
             console.log(response);
             cleanProducts();
-            state.products = response;
-            state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+            if(!!response.length){
+                state.products = response;
+                state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+            } 
         });
     }
 
