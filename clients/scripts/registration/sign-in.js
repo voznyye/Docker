@@ -21,7 +21,6 @@ window.addEventListener("DOMContentLoaded", () => {
         bindInput(state, formNameInput);
         bindInput(state, formPasswordInput);
 
-
         function sendRequest(event){
             event.preventDefault();
             if(!state.name || !state.password){
