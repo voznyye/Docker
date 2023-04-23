@@ -52,21 +52,16 @@ window.addEventListener("DOMContentLoaded", () => {
                         }
                     }, 3000)
                 })
-                .catch(error => {
-                    timerID = setTimeout(function delay() {
-                        if(error){
-                            console.log(error);
-                            console.log("error");
-                            Message.addMessage("failed");
-                            alert(error.response.data.error);
-                            clearInterval(timerID); 
-                        } else {
-                            setTimeout(delay, 3000);
-                        }
-                    }, 3000)
+                .catch(error => {                   
+                    console.log(error);
+                    Message.addMessage("failed");
+                    alert(error.response.data.error);
                 })
                 .finally(() => {                           
-                    setTimeout(() => Message.deleteMessage(), 5000);
+                    setTimeout(() => {
+                        Message.deleteMessage()
+                        clearInterval(timerID);
+                    }, 5000);
                     console.log(timerID);
                 })
             }
