@@ -2,19 +2,25 @@ const axios = require('axios').default;
 import getToken from "../verification/verification";
 
 async function uploadFile(url, data, header = getToken("token")) {
-    const result = await fetch(url, {
-        headers: {
-            ...header
-        },
-        method: "POST",
-        body: data,
-    });
+    // const result = await fetch(url, {
+    //     method: "POST",
+    //     body: data,
+    //     headers: {
+    //         ...header
+    //     }
+    // });
+    console.log(data);
 
-    if(!result.ok && result.status === 500){
-        throw new Error(result.statusText);
-    }
+    const result = await axios.post(url, {data}, 
+        {
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded",
+                ...header
+            }
+        }
+    )
 
-    return await result.json();
+    return result
 }
 
 async function postRequest(url, data, header = getToken("token")) {
@@ -29,6 +35,7 @@ async function postRequest(url, data, header = getToken("token")) {
                 ...header
             }
         })
+
     return result;
 }   
 

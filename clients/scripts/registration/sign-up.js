@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             cleanInputs("formInputs");
 
                             // Переход на другую страницу, не обновляя текущую страницу
-                            // location.href = 'log-in.html';
+                            location.href = 'log-in.html';
                             setTimeout(() => Message.deleteMessage(), 5000);
                         } else {
                             setTimeout(delay, 5000);

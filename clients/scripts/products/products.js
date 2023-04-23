@@ -40,12 +40,11 @@ window.addEventListener("DOMContentLoaded", () => {
     bindInput(state.newProductChanges, productNameInput);
     bindInput(state.newProductChanges, productDescriptionInput);
     bindInput(state.newProductChanges, productPriceInput);
-//    bindImageInput(state.newProductChanges, productImageInput);
 
     function createItem(event){
         event.preventDefault();
 
-        if(!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value){
+        if((!productNameInput.value || !productDescriptionInput.value || !productPriceInput.value) || searchInput.value){
             alert("Заполните поля name, description, price");
             return;
         }
@@ -53,7 +52,10 @@ window.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData();
         const fileField = productImageInput;
         formData.append('product', JSON.stringify(state.newProductChanges));
+
+        // здесь тег input = fileFiled, filesInput = ["file", "file", file", file] - поскольку в теге input указан multiple
         formData.append("image", fileField.files[0]);
+
 
         if(event && event.target){
             event.target.disabled = true;

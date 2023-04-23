@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     clean(state);
                     cleanInputs("formInputs");
                     // Переход на другую страницу, не обновляя текущую страницу
-                    // location.href = 'user.html';
+                    location.href = 'user.html';
                 })
                 .catch(error => {                   
                     console.log(error);
