@@ -29,33 +29,45 @@ window.addEventListener("DOMContentLoaded", () => {
             }
     
             if(event && event.target){
+                let timerID;
                 Message.createMessage(".sign__title");
                 Message.addMessage("Please wait...");
 
                 postRequest(`${window.env.host}/api/login/`, state, getToken("token"))
                 .then(response => {
-                    const timer = setTimeout(function delay(){
+                    timerID = setTimeout(function delay(){
                         if(response){
-                            clearInterval(timer);
-                            if(response.error){
-                                Message.addMessage("failed");
-                                setTimeout(() => Message.deleteMessage(), 5000);
-                                alert(response.error);
-                                return;
-                            }
+                            console.log("response");
                             Message.addMessage("success");
-                            updateLocalStorage("token", response.hash);
-                            updateLocalStorage("user_id", response.user.id)
-                            updateLocalStorage("user_name", response.user.name)
+                            updateLocalStorage("token", response.data.hash);
+                            updateLocalStorage("user_id", response.data.user.id)
+                            updateLocalStorage("user_name", response.data.user.name)
                             clean(state);
                             cleanInputs("formInputs");
                             // Переход на другую страницу, не обновляя текущую страницу
-                            location.href = 'user.html';
-                            setTimeout(() => Message.deleteMessage(), 5000);
+                            // location.href = 'user.html';
+                            clearInterval(timerID); 
                         } else {
-                            setTimeout(delay, 5000);
+                            setTimeout(delay, 3000);
                         }
-                    }, 5000)
+                    }, 3000)
+                })
+                .catch(error => {
+                    timerID = setTimeout(function delay() {
+                        if(error){
+                            console.log(error);
+                            console.log("error");
+                            Message.addMessage("failed");
+                            alert(error.response.data.error);
+                            clearInterval(timerID); 
+                        } else {
+                            setTimeout(delay, 3000);
+                        }
+                    }, 3000)
+                })
+                .finally(() => {                           
+                    setTimeout(() => Message.deleteMessage(), 5000);
+                    console.log(timerID);
                 })
             }
         }

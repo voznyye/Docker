@@ -1,21 +1,19 @@
+const axios = require('axios').default;
 import getToken from "../verification/verification";
 
 async function postRequest(url, data, header = getToken("token")) {
-    const result = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            ...header
-        }
-    })
 
-    if(!result.ok && result.status === 500){
-        throw new Error(result.statusText);
-    }
-
-
-    return await result.json();
+    const result = await axios(url, {
+        method: "post",
+        data,
+        },
+        {
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                ...header
+            }
+        })
+    return result;
 }   
 
 async function request(method, url, header){
@@ -25,16 +23,14 @@ async function request(method, url, header){
         return;
     }
 
-    const result = await fetch(url, {
+    const result = await axios(url, {
         method: method,
         headers: {
             "Content-type": "application/json; charset=UTF-8",
             ...header
         }
     })
-
-    return await result.json();
-
+    return result.data;
 }
 
 async function changeData(url, data, header){
@@ -61,4 +57,3 @@ async function changeData(url, data, header){
 
 
 export {request, postRequest, changeData};
-
