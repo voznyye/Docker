@@ -29,7 +29,6 @@ window.addEventListener("DOMContentLoaded", () => {
             }
     
             if(event && event.target){
-                let timerID;
                 Message.createMessage(".sign__title");
                 Message.addMessage("Please wait...");
 
