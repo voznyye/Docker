@@ -2,19 +2,10 @@ const axios = require('axios').default;
 import getToken from "../verification/verification";
 
 async function uploadFile(url, data, header = getToken("token")) {
-    // const result = await fetch(url, {
-    //     method: "POST",
-    //     body: data,
-    //     headers: {
-    //         ...header
-    //     }
-    // });
-    console.log(data);
-
-    const result = await axios.post(url, {data}, 
+    const result = await axios.post(url, data,
         {
             headers: {
-                "Content-type": "application/x-www-form-urlencoded",
+                "Content-type": "multipart/form-data",
                 ...header
             }
         }
