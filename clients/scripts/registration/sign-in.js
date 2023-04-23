@@ -57,12 +57,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     Message.addMessage("failed");
                     alert(error.response.data.error);
                 })
-                .finally(() => {                           
-                    setTimeout(() => {
-                        Message.deleteMessage()
-                        clearInterval(timerID);
-                    }, 5000);
-                    console.log(timerID);
+                .finally(() => {                         
+                    setTimeout(Message.deleteMessage, 5000);
                 })
             }
         }
