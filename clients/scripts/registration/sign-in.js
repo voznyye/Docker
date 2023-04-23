@@ -35,30 +35,24 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 postRequest(`${window.env.host}/api/login/`, state, getToken("token"))
                 .then(response => {
-                    timerID = setTimeout(function delay(){
-                        if(response){
-                            console.log("response");
-                            Message.addMessage("success");
-                            updateLocalStorage("token", response.data.hash);
-                            updateLocalStorage("user_id", response.data.user.id)
-                            updateLocalStorage("user_name", response.data.user.name)
-                            clean(state);
-                            cleanInputs("formInputs");
-                            // Переход на другую страницу, не обновляя текущую страницу
-                            // location.href = 'user.html';
-                            clearInterval(timerID); 
-                        } else {
-                            setTimeout(delay, 3000);
-                        }
-                    }, 3000)
+                    console.log("response");
+                    Message.addMessage("success");
+                    updateLocalStorage("token", response.data.hash);
+                    updateLocalStorage("user_id", response.data.user.id)
+                    updateLocalStorage("user_name", response.data.user.name)
+                    clean(state);
+                    cleanInputs("formInputs");
+                    // Переход на другую страницу, не обновляя текущую страницу
+                    // location.href = 'user.html';
+                    clearInterval(timerID); 
                 })
                 .catch(error => {                   
                     console.log(error);
                     Message.addMessage("failed");
-                    alert(error.response.data.error);
+                    setTimeout(() => Message.addMessage(error.response.data.error), 3000)
                 })
                 .finally(() => {                         
-                    setTimeout(Message.deleteMessage, 5000);
+                    setTimeout(Message.deleteMessage, 6000);
                 })
             }
         }
