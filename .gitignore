@@ -23,4 +23,4 @@ flask_session
 *.db
 
 clients/build
-clients/public/image
+clients/public/image/*
