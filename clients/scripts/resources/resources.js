@@ -1,6 +1,22 @@
 const axios = require('axios').default;
 import getToken from "../verification/verification";
 
+async function uploadFile(url, data, header = getToken("token")) {
+    const result = await fetch(url, {
+        headers: {
+            ...header
+        },
+        method: "POST",
+        body: data,
+    });
+
+    if(!result.ok && result.status === 500){
+        throw new Error(result.statusText);
+    }
+
+    return await result.json();
+}
+
 async function postRequest(url, data, header = getToken("token")) {
 
     const result = await axios(url, {
@@ -56,4 +72,4 @@ async function changeData(url, data, header){
 }
 
 
-export {request, postRequest, changeData};
+export {request, postRequest, changeData, uploadFile};

@@ -2,7 +2,7 @@ require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
 import { bindInput, bindImageInput} from "../modules/bindFunc";
-import { postRequest, request} from "../resources/resources";
+import { postRequest, request, uploadFile} from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
 import { renderProductCard } from "../modules/render";
 import { cleanInputs } from "../modules/cleaner";
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
     bindInput(state.newProductChanges, productNameInput);
     bindInput(state.newProductChanges, productDescriptionInput);
     bindInput(state.newProductChanges, productPriceInput);
-    bindImageInput(state.newProductChanges, productImageInput);
+//    bindImageInput(state.newProductChanges, productImageInput);
 
     function createItem(event){
         event.preventDefault();
@@ -50,9 +50,14 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const formData = new FormData();
+        const fileField = productImageInput;
+        formData.append('product', JSON.stringify(state.newProductChanges));
+        formData.append("image", fileField.files[0]);
+
         if(event && event.target){
             event.target.disabled = true;
-            postRequest(`${window.env.host}/api/products/`, state.newProductChanges, getToken("token"))
+            uploadFile(`${window.env.host}/api/products/`, formData, getToken("token"))
             .then(response => {
                 console.log(response);
                 cleanInputs("productInputs");
