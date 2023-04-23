@@ -43,10 +43,11 @@ window.addEventListener("DOMContentLoaded", () => {
                     cleanInputs("formInputs");
                     // Переход на другую страницу, не обновляя текущую страницу
                     // location.href = 'user.html';
-                    clearInterval(timerID); 
                 })
                 .catch(error => {                   
                     console.log(error);
+                    clean(state);
+                    cleanInputs("formInputs");
                     Message.addMessage("failed");
                     setTimeout(() => Message.addMessage(error.response.data.error), 3000)
                 })
