@@ -23,5 +23,3 @@ flask_session
 *.db
 
 clients/build
-!clients/public/image/.gitignore
-clients/public/image/*
