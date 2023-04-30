@@ -2,6 +2,7 @@ const axios = require('axios').default;
 import getToken from "../verification/verification";
 
 async function uploadFile(url, data, header = getToken("token")) {
+    // FormData - это и есть объект, и поэтому здесь data не нужно заворачивать в {}
     const result = await axios.post(url, data,
         {
             headers: {
@@ -53,20 +54,16 @@ async function changeData(url, data, header){
         return;
     }
 
-    const result = await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            ...header
+    const result = await axios.put(url, data, 
+        {
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                ...header
+            }
         }
-    })
-
-    if(result.status === 500){
-        throw new Error(result.statusText);
-    }
+    )
     
-    return await result.json();
+    return result;
 }
 
 

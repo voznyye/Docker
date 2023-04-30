@@ -12,7 +12,9 @@ module.exports = {
     scripts: './clients/scripts/script.js',
     signIN: './clients/scripts/registration/sign-in.js',
     signUP: './clients/scripts/registration/sign-up.js',
-    products: './clients/scripts/products/products.js'
+    products: './clients/scripts/products/products.js',
+    admin: './clients/scripts/admin.js',
+    pay: './clients/scripts/pay.js'
   },
   output: {
     filename: '[name].js',

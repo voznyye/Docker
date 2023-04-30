@@ -41,6 +41,11 @@ window.addEventListener("DOMContentLoaded", () => {
                     updateLocalStorage("user_name", response.data.user.name)
                     clean(state);
                     cleanInputs("formInputs");
+
+                    if(response.data.user.name === "admin"){
+                        location.href = 'admin.html';
+                        return;
+                    }
                     // Переход на другую страницу, не обновляя текущую страницу
                     location.href = 'user.html';
                 })

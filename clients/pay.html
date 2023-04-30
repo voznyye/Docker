@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>HomePage</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link rel="stylesheet" href="styles/style.min.css">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://www.paypal.com/sdk/js?client-id=AejRMC6GQbLkHu8wk1mEiX57npnDhIilo-X031x6jI8Q6BKoz5e_drTYYw3LMEQa2_lE_igRLGa9FAjt"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header__container">
+				<div class="header__body">
+					<a href="./home.html" class="header__logo">
+						<img src="./images/KAYO (500×200 px) (200×200 px)-cropped.svg" alt="" />
+					</a>
+
+					<div class="header__menu menu">
+						<button type="button" class="menu__icon icon-menu">
+							<span></span>
+						</button>
+						<nav class="menu__body">
+							<ul class="menu__list">
+								<li class="menu__item"><a href="" class="menu__link">Home</a></li>
+								<li class="menu__item">
+									<a href="../products.html" class="menu__link">Products</a>
+								</li>
+								<li class="menu__item">
+									<a href="../users.html" class="menu__link">Users</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<div class="header__buttons">
+						<a href="#" class="header__name">User Name</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main class="page">
+			<div class="pay">
+				<div class="pay__container">
+					<div class="pay__body">
+						<h2 class="pay__title">Checkout</h2>
+						<form action="#" class="pay__form form-pay">
+							<div class="form-pay__block">
+								<div class="form-pay__box">
+									<div class="form-pay__label-owner">
+										<h4 class="form-pay__subtitle">Owner</h4>
+										<input type="text" name="owner" class="form-pay__owner" placeholder="ex. Andrii Makivnychuk" />
+									</div>
+									<div class="form-pay__label-cvv">
+										<h4 class="form-pay__subtitle">CVV</h4>
+										<input type="text" name="cvv" class="form-pay__cvv" placeholder="ex. 111" />
+									</div>
+								</div>
+								<div class="form-pay__box">
+									<div class="form-pay__label">
+										<h4 class="form-pay__subtitle">Card number</h4>
+										<input type="text" name="number" class="form-pay__number" placeholder="ex. 1111 1111 1111 1111" />
+									</div>
+									<div class="form-pay__label">
+										<h4 class="form-pay__subtitle">Expiration date</h4>
+										<input type="text" name="date" class="form-pay__date" placeholder="ex. 11/11" />
+									</div>
+								</div>
+							</div>
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+		</main>
+
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__body">
+					<a href="" class="footer__logo">
+						<img src="./images/KAYO (500×200 px) (200×200 px)-cropped.svg" alt="" />
+					</a>
+					<p>2023 AEH students project</p>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+
+
+	<script src="./build/pay.js"></script>
+</body>
+
+</html>

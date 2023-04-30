@@ -1,8 +1,7 @@
-import json
-import os
-
-from flask import current_app, jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint
 from werkzeug.utils import secure_filename
+
+from os import path
 
 from api.login.auth_middleware import token_required
 from api.products.product import Product
@@ -10,11 +9,6 @@ from api.products.product import Product
 bp = Blueprint('products', __name__, url_prefix='/api/products')
 
 product = Product()
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
 
 
 @bp.route('/', methods=['GET'])
@@ -27,28 +21,25 @@ def get_products():
 @bp.route('/', methods=['POST'])
 @token_required
 def create_product():
-    file = request.files['image']
-    json_data = json.loads(request.form.get('product'))
-
     """Create a new product"""
-    name = json_data['name']
-    price = json_data['price']
-    title = json_data['title']
-    image = os.path.join(current_app.config['PUBLIC_FOLDER'], file.filename)
-    if not name or not price or not title:
-        return jsonify({'error': 'name, price and title are required'}), 400
+    name = request.json.get('name')
+    price = request.json.get('price')
+    title = request.json.get('title')
+    image = request.json.get('image')
 
-    # if file and allowed_file(file.filename):
-    #     return jsonify({'error': 'file type not allow.'}), 400
+    file = request.files['photo']
+    filename = secure_filename(file.filename)
+
+    from api.__init__ import app
+    file.save(path.join(app.config['clients/images'], filename))
+
+    if not name or not price or not title or not image or not file:
+        return jsonify({'error': 'name, price, image, and title are required'}), 400
 
     try:
         product.createProduct(name, price, title, image)
     except Exception as e:
-        return jsonify({'error': f"{e}"}), 500  # error
-
-    """Upload file"""
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        return jsonify({'error': f"{e}"}), 500
 
     return jsonify({'message': f'Product {name} created'}), 201
 
@@ -59,9 +50,8 @@ def get_product_by_name(name):
     row = product.findByName(name)
 
     if row is not None:
-        return jsonify(
-            {'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'], 'image': row['image'],
-             'status': row['status']}), 200
+        return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'],
+                        'image': row['image'], 'status': row['status'], 'file': row['file']}), 200
 
     return jsonify({'error': f'Product with name {name} not found'}), 404
 
@@ -74,9 +64,8 @@ def get_product_by_id(product_id):
     if row is None:
         return jsonify({'error': f'Product with ID {product_id} not found'}), 404
 
-    return jsonify(
-        {'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'], 'image': row['image'],
-         'status': row['status']}), 200
+    return jsonify({'id': row['id'], 'name': row['name'], 'price': row['price'], 'title': row['title'],
+                    'image': row['image'], 'status': row['status']}), 200
 
 
 @bp.route('/<int:product_id>', methods=['PUT'])
@@ -86,6 +75,7 @@ def update_product(product_id):
     name = request.json.get('name')
     price = request.json.get('price')
     title = request.json.get('title')
+    image = request.json.get('image')
 
     if not name and not price and not title:
         return jsonify({'error': 'name, price and/or title are required'}), 400
@@ -95,7 +85,7 @@ def update_product(product_id):
     if row is None:
         return jsonify({'error': f'User with ID {product_id} not found'}), 404
 
-    product.updateProduct(product_id, name, price, title)
+    product.updateProduct(product_id, name, price, title, image)
 
     return jsonify({'message': f'Product {product_id} updated'}), 200
 

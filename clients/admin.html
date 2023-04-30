@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>HomePage</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link rel="stylesheet" href="styles/style.min.css">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<main class="page">
+			<div class="admin">
+				<div class="admin__container">
+					<div class="admin__body">
+						<div class="admin__header">
+							<h2 class="admin__title">Admin Cabinet</h2>
+							<div class="admin__box">
+								<div class="admin__username">Username</div>
+								<div class="admin__id">ID</div>
+							</div>
+						</div>
+						<div class="admin__wrapper">
+							<div class="admin__product">
+								<div class="product-admin__info">
+									<input type="text" class="product-admin__id" id="input-id" name="id" placeholder="product ID" />
+									<input type="text" class="product-admin__name" id="input-name" name="name" placeholder="product name" />
+									<input type="text" class="product-admin__price" id="input-price" name="price" placeholder="product price" />
+									<input type="text" class="product-admin__title" id="input-title" name="title" placeholder="product title" />
+								</div>
+								<div class="product-admin__buttons">
+									<button class="product-admin__button product-admin__button-add" id="add-product">
+										ADD PRODUCT
+									</button>
+									<button class="product-admin__button product-admin__button-edit" id="edit-product">
+										EDIT PRODUCT
+									</button>
+									<button class="product-admin__button product-admin__button-delete" id="delete-product">
+										DELETE PRODUCT
+									</button>
+								</div>
+								<button class="admin__button" id="get-all-products">Show all products</button>
+							</div>
+							<div class="admin__user">
+								<div class="user-admin__user-id">
+									<input type="text" class="input-admin__id" id="input-user-id" name="userID" placeholder="user ID" />
+									<button class="user-admin__button user-admin__button-find" id="find-user">
+										find user by id
+									</button>
+								</div>
+								<button class="user-admin__button user-admin__button-get-all" id="get-all-users">
+									Get all users
+								</button>
+								<button class="user-admin__button user-admin__button-gelete" id="delete-user">
+									Delete user by id
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__body">
+					<a href="" class="footer__logo">
+						<img src="./images/KAYO (500×200 px) (200×200 px)-cropped.svg" alt="" />
+					</a>
+					<p>2023 AEH students project</p>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+
+	<script src="./build/admin.js"></script>
+</body>
+</html>
