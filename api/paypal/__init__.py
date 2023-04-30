@@ -114,11 +114,11 @@ def success():
     # payment_id = session.get('payment_id')
     data = request.json['data']
     payment_id = data['paymentID']
-    print(payment_id)
-    buyer = request.args.get('buyer', data['payerID'])
+    payer_id = data['payerID']
+    buyer = request.args.get('buyer', payer_id)
     amount = request.args.get('amount', 100)
     payment = paypalrestsdk.Payment.find(payment_id)
-    if payment.execute({'payer_id': data['payerID']}):
+    if payment.execute({'payer_id': payer_id}):
         paypal.createPayment(buyer, amount, status='success')
         return jsonify({'message': 'Success'})
     else:
