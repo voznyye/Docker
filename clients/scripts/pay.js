@@ -68,8 +68,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 },
                 body: JSON.stringify(data),
               })
-
-              alert('payment cancel')
+              .then((response) => response.json())
+              .then((orderData) => {alert('payment cancel')})
         },
         onError: function (err) {
             console.info(err)
