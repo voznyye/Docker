@@ -115,7 +115,7 @@ def success():
     data = request.json['data']
     payment_id = data['paymentID']
     print(payment_id)
-    buyer = request.args.get('buyer', 'test')
+    buyer = request.args.get('buyer', data['payerID'])
     amount = request.args.get('amount', 100)
     payment = paypalrestsdk.Payment.find(payment_id)
     if payment.execute({'payer_id': data['payerID']}):
@@ -128,8 +128,20 @@ def success():
 
 @bp.route('/cancel', methods=['GET','POST'])
 def cancel():
-    orderID = request.json['orderID']
-    buyer = request.args.get('buyer', orderID)
+    order_id = request.json['orderID']
+    print(order_id)
+    buyer = request.args.get('buyer', order_id)
     amount = request.args.get('amount', 100)
+
+    try:
+        order = paypalrestsdk.Order.find(order_id)
+        order.void()
+        print(order)
+    except Exception as e:
+        return {
+            "message": "Something went wrong",
+            "data": None,
+            "error": str(e)
+        }, 500
     paypal.createPayment(buyer, amount, status='canceled')
     return jsonify({'message': 'Canceled!'})
