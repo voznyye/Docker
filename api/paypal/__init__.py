@@ -128,6 +128,7 @@ def success():
 
 @bp.route('/cancel', methods=['GET','POST'])
 def cancel():
+    print(session.get('payment_id'))
     order_id = request.json['orderID']
     print(order_id)
     buyer = request.args.get('buyer', order_id)

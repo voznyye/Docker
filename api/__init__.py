@@ -21,18 +21,17 @@ def create_api():
 
     app_flask.secret_key = 'dev'
     app_flask.config['JSON_SORT_KEYS'] = False
+    app_flask.config["SESSION_PERMANENT"] = False
+    app_flask.config["SESSION_TYPE"] = "filesystem"
+    app_flask.config["SESSION_COOKIE_NAME"] = "session"
+    app_flask.config.from_object(__name__)
+    Session(app_flask)
     CORS(app_flask)
     app_flask.register_blueprint(user.bp)
     app_flask.register_blueprint(login.bp)
     app_flask.register_blueprint(products.bp)
     app_flask.register_blueprint(paypal.bp)
     db.init_app(app_flask)
-
-    app_flask.config["SESSION_PERMANENT"] = False
-    app_flask.config["SESSION_TYPE"] = "filesystem"
-    app_flask.config["SESSION_COOKIE_NAME"] = "session"
-    app_flask.config.from_object(__name__)
-    Session(app_flask)
 
     return app_flask
 
