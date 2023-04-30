@@ -8,8 +8,8 @@ paypal = Paypal()
 
 paypalrestsdk.configure({
     "mode": "sandbox",
-    "client_id": "AejRMC6GQbLkHu8wk1mEiX57npnDhIilo-X031x6jI8Q6BKoz5e_drTYYw3LMEQa2_lE_igRLGa9FAjt",
-    "client_secret": "EPNJNhlXAWqJ56pEYms_tkh_SSzWjMXvpY-vxf0dq2fxiGLy83Mxy2pPrB9AKklImHmt8hSn8HZKhfed"
+    "client_id": "ARynM0vDDm8edzvDz0h7ExKi09kW7vsGPGTJOr-Julcb4ovBznbQ9mYLV2scIaUMuzJZAfdmpoiUjTN1",
+    "client_secret": "EJKtgAj2Afz1R19vcsFVZfhhd0MygQsXGBOL-6tgAYe1gMh_oj1wkoGsVkvt378z2dJX0_xh3VjgbcuL"
 })
 
 
