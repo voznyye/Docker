@@ -5,7 +5,7 @@ from flask import jsonify, request, Blueprint, redirect, session
 from api.login.auth_middleware import token_required
 from api.paypal.paypal import Paypal
 
-bp = Blueprint('products', __name__, url_prefix='/api/paypal')
+bp = Blueprint('pay', __name__, url_prefix='/api/paypal')
 paypal = Paypal()
 
 paypalrestsdk.configure({
@@ -16,10 +16,10 @@ paypalrestsdk.configure({
 
 
 @bp.route('/', methods=['POST'])
-@token_required
+# @token_required
 def pay():
-    buyer = request.json['buyer']
-    amount = request.json['amount']
+    buyer = request.json['cart'][0]['buyer']
+    amount = request.json['cart'][0]['amount']
     payment = paypalrestsdk.Payment({
         "intent": "sale",
         "payer": {

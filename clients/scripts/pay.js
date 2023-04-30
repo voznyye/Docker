@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
     paypal.Buttons({
         // Order is created on the server and the order id is returned
         createOrder() {
-          return fetch("/my-server/create-paypal-order", {
+          return fetch(window.env.host + "/api/paypal/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -18,6 +18,8 @@ window.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({
               cart: [
                 {
+                  buyer: "test",
+                  amount: 100,
                   sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
                   quantity: "YOUR_PRODUCT_QUANTITY",
                 },
@@ -50,7 +52,7 @@ window.addEventListener("DOMContentLoaded", () => {
             // Or go to another URL:  window.location.href = 'thank_you.html';
           });
         }
-      }).render('#paypal-button-container');
+      }).render('#paypal-pay-button');
 
     
 })
