@@ -99,7 +99,7 @@ def pay():
             if link.rel == 'approval_url':
                 redirect_url = link.href
                 token = link.href.split("EC-", 1)[1]
-        return jsonify({'id': token, 'link': redirect_url, 'state': payment.state})
+        return jsonify({'id': payment.id, 'token': token, 'link': redirect_url, 'state': payment.state})
         # for link in payment.links:
         #     if link.rel == 'approval_url':
         #         redirect_url = link.href

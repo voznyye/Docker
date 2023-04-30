@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 from flask_session import Session
@@ -11,6 +13,12 @@ def create_api():
     app_flask.config.from_mapping(
         SECRET_KEY='dev',
     )
+
+    try:
+        os.makedirs(app_flask.instance_path)
+    except OSError:
+        pass
+
     app_flask.secret_key = 'dev'
     app_flask.config['JSON_SORT_KEYS'] = False
     CORS(app_flask)

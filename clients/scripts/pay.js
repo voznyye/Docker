@@ -27,7 +27,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }),
           })
           .then((response) => response.json())
-          .then((order) => order.id);
+          .then((order) => order.token);
         },
         // Finalize the transaction on the server after payer approval
         onApprove(data) {
@@ -67,7 +67,10 @@ window.addEventListener("DOMContentLoaded", () => {
           })
           .then((response) => response.json())
           .then((order) => order.id);
-          }
+        },
+        onError: function (err) {
+            console.info(err)
+        }
       }).render('#paypal-pay-button');
 
     
