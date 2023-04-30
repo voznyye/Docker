@@ -19,7 +19,7 @@ def create_api():
     except OSError:
         pass
 
-    app_flask.secret_key = 'dev'
+    # app_flask.secret_key = 'dev'
     app_flask.config['JSON_SORT_KEYS'] = False
     app_flask.config["SESSION_PERMANENT"] = False
     app_flask.config["SESSION_TYPE"] = "filesystem"
