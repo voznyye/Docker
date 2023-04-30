@@ -14,3 +14,5 @@ ns:
 # start working webpack
 nb:
 	npm run build
+pip:
+	pip install -r ./requirements.txt
