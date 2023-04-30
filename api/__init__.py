@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_session import Session
 
 from api import user, login, products, paypal
 from api.user import db
@@ -18,6 +19,12 @@ def create_api():
     app_flask.register_blueprint(products.bp)
     app_flask.register_blueprint(paypal.bp)
     db.init_app(app_flask)
+
+    app_flask.config["SESSION_PERMANENT"] = False
+    app_flask.config["SESSION_TYPE"] = "filesystem"
+    app_flask.config["SESSION_COOKIE_NAME"] = "session"
+    app_flask.config.from_object(__name__)
+    Session(app_flask)
 
     return app_flask
 

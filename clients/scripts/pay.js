@@ -31,13 +31,14 @@ window.addEventListener("DOMContentLoaded", () => {
         },
         // Finalize the transaction on the server after payer approval
         onApprove(data) {
-          return fetch("/my-server/capture-paypal-order", {
+          return fetch(window.env.host + "/api/paypal/success", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              orderID: data.orderID
+              orderID: data.orderID,
+              data: data
             })
           })
           .then((response) => response.json())
