@@ -126,9 +126,10 @@ def success():
         return jsonify({'error': 'Payment error'})
 
 
-@bp.route('/cancel')
+@bp.route('/cancel', methods=['GET','POST'])
 def cancel():
-    buyer = request.args.get('buyer')
-    amount = request.args.get('amount')
+    orderID = request.json['orderID']
+    buyer = request.args.get('buyer', orderID)
+    amount = request.args.get('amount', 100)
     paypal.createPayment(buyer, amount, status='canceled')
     return jsonify({'message': 'Canceled!'})

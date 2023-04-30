@@ -52,7 +52,22 @@ window.addEventListener("DOMContentLoaded", () => {
              element.innerHTML = '<h3>Thank you for your payment!</h3>';
             // Or go to another URL:  window.location.href = 'thank_you.html';
           });
-        }
+        },
+        onCancel: function (data) {
+            // Show a cancel page or return to cart
+            console.info(data)
+            fetch(window.env.host + "/api/paypal/cancel", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // use the "body" param to optionally pass additional order information
+            // like product skus and quantities
+            body: JSON.stringify(data),
+          })
+          .then((response) => response.json())
+          .then((order) => order.id);
+          }
       }).render('#paypal-pay-button');
 
     
