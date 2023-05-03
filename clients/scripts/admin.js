@@ -17,9 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
         getAllUsersButton = document.getElementById("get-all-users"),
         deleteUserButton = document.getElementById("delete-user");
 
-    const state = {
-
-    }
+    const state = {};
 
     bindInput(state, inputProductID);
     bindInput(state, inputProductName);

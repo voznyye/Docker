@@ -1,13 +1,12 @@
 require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
-import { bindInput, bindImageInput} from "../modules/bindFunc";
-import { changeData, postRequest, request, uploadFile} from "../resources/resources";
+import { bindInput} from "../modules/bindFunc";
+import { changeData, request, uploadFile} from "../resources/resources";
 import { currentUserInit } from "../modules/currentUserInit";
 import { renderProductCard } from "../modules/render";
 import { cleanInputs } from "../modules/cleaner";
 import getToken from "../verification/verification";
-
 
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
@@ -72,35 +71,35 @@ window.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.log(error);
                 const checkedError = confirm(error.message);
-                if(checkedError || !checkedError){
-                    location.reload();
-                }
+                // if(checkedError || !checkedError){
+                //     location.reload();
+                // }
             })
         }
     }
 
-    function searchProduct(event){
-        event.preventDefault();
-        if(!searchInput.value){
-            alert("Укажите id продукта");
-            return;
-        }
+    // function searchProduct(event){
+    //     event.preventDefault();
+    //     if(!searchInput.value){
+    //         alert("Укажите id продукта");
+    //         return;
+    //     }
 
-        if(event && event.target){
-            event.target.disabled = true;
-            request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
-            .then(response => {
-                event.target.disabled = false;
-                if(response.error){
-                    alert(response.error);
-                } else {
-                    cleanProducts();
-                    state.products = [{...response}];
-                    state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-                }
-            })
-        }
-    }
+    //     if(event && event.target){
+    //         event.target.disabled = true;
+    //         request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
+    //         .then(response => {
+    //             event.target.disabled = false;
+    //             if(response.error){
+    //                 alert(response.error);
+    //             } else {
+    //                 cleanProducts();
+    //                 state.products = [{...response}];
+    //                 state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+    //             }
+    //         })
+    //     }
+    // }
 
     function createProducts() {
         request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
@@ -169,7 +168,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     createButton.addEventListener("click", createItem.bind(this));
 
-    searchButton.addEventListener("click", searchProduct.bind(this));
+    // searchButton.addEventListener("click", searchProduct.bind(this));
 
     changeProductButton.addEventListener("click", changeProduct.bind(this));
 
