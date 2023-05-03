@@ -1,12 +1,12 @@
 require("es6-promise").polyfill();
 import "nodelist-foreach-polyfill";
 
-import { bindInput} from "../modules/bindFunc";
-import { changeData, request, uploadFile} from "../resources/resources";
-import { currentUserInit } from "../modules/currentUserInit";
-import { renderProductCard } from "../modules/render";
-import { cleanInputs } from "../modules/cleaner";
-import getToken from "../verification/verification";
+import { bindInput} from "./modules/bindFunc";
+import { changeData, request, uploadFile} from "./resources/resources";
+import { currentUserInit } from "./modules/currentUserInit";
+import { renderProductCard } from "./modules/render";
+import { cleanInputs } from "./modules/cleaner";
+import getToken from "./verification/verification";
 
 window.addEventListener("DOMContentLoaded", () => {
     "use strict";
