@@ -19,6 +19,7 @@ CREATE TABLE products (
 
 CREATE TABLE payment (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  paypalid TEXT NOT NULL,
   buyer TEXT NOT NULL,
   amount INTEGER,
   status TEXT NOT NULL

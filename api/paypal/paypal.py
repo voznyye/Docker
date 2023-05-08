@@ -14,7 +14,8 @@ class Paypal(Resource):
     def findByStatus(self, status):
         return get_db().execute('SELECT * FROM payment WHERE status=?', (status,)).fetchone()
 
-    def createPayment(self, buyer, amount, status):
+    def createPayment(self, paypalid, buyer, amount, status):
         payment_db = get_db()
-        payment_db.execute('INSERT INTO payment (buyer, amount, status) VALUES (?, ?, ?)', (buyer, amount, status))
+        payment_db.execute('INSERT INTO payment (paypalid, buyer, amount, status) VALUES (?, ?, ?, ?)',
+                           (paypalid, buyer, amount, status))
         payment_db.commit()
