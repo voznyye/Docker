@@ -17,17 +17,16 @@ window.addEventListener("DOMContentLoaded", () => {
         productPriceInput = document.getElementById("product-price"),
         productImageInput = document.getElementById("product-img"),
 
-        searchButton = document.getElementById("get-one"),
         createButton = document.getElementById("create-new-item"),
+        payButton = document.getElementById("pay"),
 
-        productsContainer = document.getElementById("products-hero"),
+        productsContainer = document.getElementById("products-hero");
 
-        changeProductButton = document.getElementById("change-data"),
-        deleteProductButton = document.getElementById("delete");
 
-    let state = {
+    const state = {
         products: [],
-        newProductChanges: {}
+        newProductChanges: {},
+        amount: JSON.parse(localStorage.getItem("amount")) ? JSON.parse(localStorage.getItem("amount")) : 0
     };
 
     const methods = {
@@ -71,181 +70,73 @@ window.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.log(error);
                 const checkedError = confirm(error.message);
-                // if(checkedError || !checkedError){
-                //     location.reload();
-                // }
+                event.target.disabled = false;
+                if(checkedError || !checkedError){
+                    location.reload();
+                }
             })
         }
     }
-
-    // function searchProduct(event){
-    //     event.preventDefault();
-    //     if(!searchInput.value){
-    //         alert("Укажите id продукта");
-    //         return;
-    //     }
-
-    //     if(event && event.target){
-    //         event.target.disabled = true;
-    //         request(methods.get, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
-    //         .then(response => {
-    //             event.target.disabled = false;
-    //             if(response.error){
-    //                 alert(response.error);
-    //             } else {
-    //                 cleanProducts();
-    //                 state.products = [{...response}];
-    //                 state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-    //             }
-    //         })
-    //     }
-    // }
 
     function createProducts() {
         request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
         .then(response => {
             console.log(response);
             cleanProducts();
+            document.getElementById("amount").textContent = `Your amount: ${state.amount}zł`;
             if(!!response.length){
                 state.products = response;
-                state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
+                state.products.map(item => {
+                    productsContainer.innerHTML += renderProductCard(item)
+                })
+                bindAddButton("#product-button")
             } 
         });
     }
 
-    function changeProduct(event){
-        if(!searchInput.value || ((!productNameInput.value && !productDescriptionInput.value && !productPriceInput.value))){
-            alert("Обязательно заполните поля id, и один из трех полей ниже, чтобы изменить информацию о продукте!");
-            return;
-        }
-        if(event && event.target){
-            event.target.disabled = true;
-            changeData(`${window.env.host}/api/products/${state.newProductChanges.id}`, 
-            JSON.stringify({
-                name: state.newProductChanges.name, 
-                price: state.newProductChanges.price, 
-                title: state.newProductChanges.title
-            }), 
-            getToken("token"))
-            .then(response => {
-                console.log(response.data.message);
-                event.target.disabled = false;
-                alert(response.message);
-                // getAllButton.click();
-                cleanInputs("productInputs");
-                cleanProducts();
-                createProducts();
-            })
-            .catch(error => {
-                console.log(error);
-                alert(error.response.data.error);
-            });
-        }
-    }
+    function bindAddButton(selector) {
+        const buttons = document.querySelectorAll(selector);
 
-    function deleteProduct(event){
-        if(!searchInput.value){
-            alert("Укажите id продукта");
-            return;
-        }
-
-        if(event && event.target){
-            event.target.disabled = true;
-            request("DELETE", `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
-            .then(response => {
-                alert(response.message);
-                cleanInputs("productInputs");
-                cleanProducts();
-                createProducts();
-                event.target.disabled = false;
-            });
-        }
+        buttons.forEach((button, index) => {
+            button.addEventListener("click", event => {
+                event.preventDefault();
+    
+                if(event && event.target){
+                    state.products.map((item, i) => {
+                        if(index === i){
+                            state.amount += item.price;
+                            localStorage.setItem("amount", state.amount);
+                        }
+                    })  
+                    document.getElementById("amount").textContent = `Your amount: ${state.amount}zł`;
+                }
+            }) 
+        }) 
     }
 
     function cleanProducts() {
         productsContainer.innerHTML = "";
     }
 
+    function payLoad(event) {
+        event.preventDefault();
+
+        if(event && event.target && !!state.amount){
+            location.href = "pay.html"
+        }
+    }
+
     createButton.addEventListener("click", createItem.bind(this));
 
-    // searchButton.addEventListener("click", searchProduct.bind(this));
-
-    changeProductButton.addEventListener("click", changeProduct.bind(this));
-
-    deleteProductButton.addEventListener("click", deleteProduct.bind(this));
-
-
-    // For admin page
-/*     changeButton = document.getElementById("change-data"),
-    deleteButton = document.getElementById("delete"),
-    getAllButton = document.getElementById("get-all"), */
-/*     function getAllProducts(event) {
-        event.target.disabled = true;
-        if(event && event.target){
-            request(methods.get, `${window.env.host}/api/products/`, getToken("token"))
-            .then(response => {
-                console.log(response);
-                cleanProducts();
-                state.products = response;
-                state.products.map(item => productsContainer.innerHTML += renderProductCard(item))
-                event.target.disabled = false;
-            });
-        }
-    }
-
-    function changeProduct(event){
-        if(!searchInput.value || ((!productNameInput.value && !productDescriptionInput.value && !productPriceInput.value))){
-            alert("Обязательно заполните поля id, и один из трех полей ниже, чтобы изменить информацию о продукте!");
-            return;
-        }
-        if(event && event.target){
-            event.target.disabled = true;
-            changeData(`${window.env.host}/api/products/${state.newProductChanges.id}`, {name: state.newProductChanges.name, price: state.newProductChanges.price, title: state.newProductChanges.title}, getToken("token"))
-            .then(response => {
-                const timer = setTimeout(function delay(){
-                    if(response){
-                        clearInterval(timer);
-                        event.target.disabled = false;
-                        if(response.error){
-                            alert(response.error);
-                        } else {
-                            alert(response.message);
-                            getAllButton.click();
-                            cleanInputs("productInputs");
-                        }
-                    } else {
-                        setTimeout(delay, 5000)
-                    }
-                }, 5000)
-            });
-        }
-    }
-
-    function deleteProduct(event){
-        if(!searchInput.value){
-            alert("Укажите id продукта");
-            return;
-        }
-
-        if(event && event.target){
-            event.target.disabled = true;
-            request(methods.delete, `${window.env.host}/api/products/${searchInput.value}`, getToken("token"))
-            .then(response => {
-                alert(response.message);
-                getAllButton.click();
-                event.target.disabled = false;
-            });
-        }
-    } */
+    payButton.addEventListener("click", payLoad.bind(this))
 
 
 
-    // For admin page
-/*     getAllButton.addEventListener("click", getAllProducts.bind(this));
-
-    changeButton.addEventListener("click", changeProduct.bind(this));
-
-    deleteButton.addEventListener("click", deleteProduct.bind(this)); */
 
 
 })
+
+
+
+
+

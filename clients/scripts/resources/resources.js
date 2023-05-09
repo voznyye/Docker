@@ -32,7 +32,6 @@ async function postRequest(url, data, header = getToken("token")) {
 }   
 
 async function request(method, url, header){
-
     if(!getToken("token")){
         alert("Вы не зарегстрированы или не авторизованы");
         return;
@@ -45,7 +44,9 @@ async function request(method, url, header){
             ...header
         }
     })
+    
     return result.data;
+
 }
 
 async function changeData(url, data, header){

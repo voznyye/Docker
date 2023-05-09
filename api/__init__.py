@@ -1,7 +1,7 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 
-from api import user, login, products, paypal
+from api import user, login, products
 from api.user import db
 
 UPLOAD_FOLDER = '.\clients\public\image'
@@ -22,16 +22,9 @@ def create_api():
     app_flask.register_blueprint(user.bp)
     app_flask.register_blueprint(login.bp)
     app_flask.register_blueprint(products.bp)
-    app_flask.register_blueprint(paypal.bp)
     db.init_app(app_flask)
 
     return app_flask
 
 
 app = create_api()
-
-
-# @app.route('/api/public/image/<string:name>', methods=['GET'])
-# def get_static(name):
-#     print(send_from_directory(app.config['UPLOAD_FOLDER'], name))
-#     return send_from_directory(app.config['UPLOAD_FOLDER'], name)

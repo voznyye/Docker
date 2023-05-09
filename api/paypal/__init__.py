@@ -1,19 +1,15 @@
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
-
-from flask import jsonify, Blueprint
-from flask import request as req
+from flask import jsonify, Blueprint, request
 from api.paypal.paypal import Paypal
-
 
 bp = Blueprint('pay', __name__, url_prefix='/api/paypal')
 paypal = Paypal()
 
-
 @bp.route('/', methods=['POST'])
 def pay():
     # request data of client
-    buyer = req.json.get('buyer')
-    amount = req.json.get('amount')
+    buyer = request.json.get('buyer')
+    amount = request.json.get('amount')
     if not buyer or not amount:
         return jsonify({'error': 'buyer and amount are required'}), 400
 
@@ -29,18 +25,18 @@ def pay():
     from paypalhttp import HttpError
     # Construct a request object and set desired parameters
     # Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
-    request = OrdersCreateRequest()
+    req = OrdersCreateRequest()
 
-    request.prefer('return=representation')
+    req.prefer('return=representation')
 
-    request.request_body(
+    req.request_body(
         {
             "intent": "CAPTURE",
             "purchase_units": [
                 {
                     "amount": {
                         "currency_code": "USD",
-                        "value": amount
+                        "value": str(amount)  # Convert amount to string
                     }
                 }
             ]
@@ -55,8 +51,8 @@ def pay():
         paypalid = response.result.id
         paypal.createPayment(paypalid, buyer, amount, status)
         return jsonify({'Status Code:': response.status_code, 'Status:': response.result.status, 'paypalid': response.result.id })
-    except IOError as ioe:
-        # return jsonify(ioe), 500
-        if isinstance(ioe, HttpError):
-            # Something went wrong server-side
-            return jsonify({'status':ioe.status_code}), 501
+    except HttpError as e:  # Use HttpError instead of IOError
+        # Something went wrong server-side
+        return jsonify({'status': e.status_code}), 501
+    except Exception as e:  # Catch any other exceptions
+        return jsonify({'error': str(e)}), 500

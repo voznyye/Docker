@@ -18,7 +18,7 @@ function renderUserCard(item) {
 }
 
 function sortUsersID(arr){
-    return arr.sort((a, b) => a.id - b.id);
+    return arr.toSorted((a, b) => a.id - b.id);
 }
 
 function renderProductCard(item){
@@ -39,7 +39,7 @@ function renderProductCard(item){
                 </p>
             </div>
             <div class="product-hero__block">
-                <a class="product-hero__buy" href="#">add</a>
+                <a class="product-hero__buy" id="product-button" href="#">add</a>
             </div>
         </div>
     `

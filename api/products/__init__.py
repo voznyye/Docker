@@ -107,6 +107,3 @@ def delete_product(product_id):
 
     if row is None:
         return jsonify({'error': f'Product with ID {product_id} not found'}), 404
-
-    product.deleteProduct(product_id)
-    return jsonify({'message': f'Product {product_id} deleted'}), 200
