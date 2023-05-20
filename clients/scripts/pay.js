@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const payButton = document.getElementById("pay");
     const amount = JSON.parse(localStorage.getItem("amount"));
+    const name = localStorage.getItem("user_name");
 
     paypal.Buttons({
         // Order is created on the server and the order id is returned
@@ -21,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({
               cart: [
                 {
-                  buyer: "test",
+                  buyer: name,
                   amount,
                   sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
                   quantity: "YOUR_PRODUCT_QUANTITY",
