@@ -20,13 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
             // use the "body" param to optionally pass additional order information
             // like product skus and quantities
             body: JSON.stringify({
-              cart:
-                {
-                  buyer: name,
-                  amount,
-                  sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
-                  quantity: "YOUR_PRODUCT_QUANTITY",
-                },
+                buyer: name,
+                amount,
+                sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
             }),
           })
           .then((response) => response.json())
