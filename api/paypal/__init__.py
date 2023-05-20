@@ -37,7 +37,7 @@ def pay():
                 {
                     "amount": {
                         "currency_code": "USD",
-                        "value": str(amount)  # Convert amount to string
+                        "value": str(amount)
                     }
                 }
             ]

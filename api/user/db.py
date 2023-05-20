@@ -16,8 +16,7 @@ def get_db():
         g.db = sqlite3.connect(
             db_name,
             detect_types=sqlite3.PARSE_DECLTYPES
-        )
-        # https: // docs.python.org / 3 / library / sqlite3.html  # how-to-create-and-use-row-factories
+
         g.db.row_factory = dict_factory
 
     return g.db

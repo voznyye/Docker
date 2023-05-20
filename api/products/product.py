@@ -42,3 +42,4 @@ class Product(Resource):
         user_db = get_db()
         user_db.execute('DELETE FROM products WHERE id=?', (product_id,))
         user_db.commit()
+

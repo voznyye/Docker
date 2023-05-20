@@ -37,10 +37,6 @@ def create_product():
     image = os.path.join(current_app.config['PUBLIC_FOLDER'], file.filename)
     if not name or not price or not title:
         return jsonify({'error': 'name, price and title are required'}), 400
-
-    # if file and allowed_file(file.filename):
-    #     return jsonify({'error': 'file type not allow.'}), 400
-
     try:
         product.createProduct(name, price, title, image)
     except Exception as e:
@@ -103,7 +99,7 @@ def update_product(product_id):
 @bp.route('/<int:product_id>', methods=['DELETE'])
 @token_required
 def delete_product(product_id):
-    row = product.findProductById(product_id)
+    row = product.deleteProduct(product_id)
 
     if row is None:
         return jsonify({'error': f'Product with ID {product_id} not found'}), 404
