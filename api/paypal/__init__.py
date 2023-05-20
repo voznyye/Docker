@@ -46,7 +46,7 @@ def pay():
 
     try:
         # Call API with your client and get a response for your call
-        response = client.execute(req)  # Use req instead of request
+        response = client.execute(req)
 
         status = response.result.status
         paypalid = response.result.id
