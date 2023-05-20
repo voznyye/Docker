@@ -5,6 +5,7 @@ from api.paypal.paypal import Paypal
 bp = Blueprint('pay', __name__, url_prefix='/api/paypal')
 paypal = Paypal()
 
+
 @bp.route('/', methods=['POST'])
 def pay():
     # request data of client
@@ -45,13 +46,13 @@ def pay():
 
     try:
         # Call API with your client and get a response for your call
-        response = client.execute(request)
+        response = client.execute(req)  # Use req instead of request
 
         status = response.result.status
         paypalid = response.result.id
         paypal.createPayment(paypalid, buyer, amount, status)
         return jsonify({'Status Code:': response.status_code, 'Status:': response.result.status, 'paypalid': response.result.id })
-    except HttpError as e:  # Use HttpError instead of IOError
+    except HttpError as e:
         # Something went wrong server-side
         return jsonify({'status': e.status_code}), 501
     except Exception as e:  # Catch any other exceptions

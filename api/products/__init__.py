@@ -44,7 +44,7 @@ def create_product():
     try:
         product.createProduct(name, price, title, image)
     except Exception as e:
-        return jsonify({'error': f"{e}"}), 500  # error
+        return jsonify({'error': f"{e}"}), 500
 
     """Upload file"""
     filename = secure_filename(file.filename)
