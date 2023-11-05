@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from back.api.login.login import Login
+from api.login.login import Login
 
 bp = Blueprint('login', __name__, url_prefix='/api/login')
 

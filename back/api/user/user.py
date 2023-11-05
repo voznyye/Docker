@@ -2,7 +2,7 @@ import hashlib
 
 from flask_restful import Resource
 
-from back.api.user.db import get_db
+from api.user.db import get_db
 
 
 def hash_password(password):

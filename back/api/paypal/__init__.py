@@ -1,6 +1,6 @@
-from back.paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
+from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
 from flask import jsonify, Blueprint, request
-from back.api.paypal.paypal import Paypal
+from api.paypal.paypal import Paypal
 
 bp = Blueprint('pay', __name__, url_prefix='/api/paypal')
 paypal = Paypal()

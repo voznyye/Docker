@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
 
-from back.api import user, login, products
-from back.api import paypal
-from back.api.user import db
+from api import user, login, products
+from api import paypal
+from api.user import db
 
 UPLOAD_FOLDER = '.\clients\public\image'
 PUBLIC_FOLDER = 'public/image'

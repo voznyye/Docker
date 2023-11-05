@@ -4,8 +4,8 @@ import os
 from flask import current_app, jsonify, request, Blueprint
 from werkzeug.utils import secure_filename
 
-from back.api.login.auth_middleware import token_required
-from back.api.products.product import Product
+from api.login.auth_middleware import token_required
+from api.products.product import Product
 
 bp = Blueprint('products', __name__, url_prefix='/api/products')
 

@@ -2,7 +2,7 @@ import jwt
 from flask import jsonify, current_app
 from flask_restful import Resource
 
-from back.api.user.user import hash_password, User
+from api.user.user import hash_password, User
 
 user_class = User()
 
