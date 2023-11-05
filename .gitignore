@@ -15,12 +15,12 @@ instance/
 htmlcov/
 
 dist/
-clients/build/
+front/clients/build/
 *.egg-info/
 
 flask_session
 
 *.db
 
-clients/build
-clients/public/image
+front/clients/build
+front/clients/public/image
