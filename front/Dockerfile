@@ -1,4 +1,5 @@
-FROM ubuntu:latest
-LABEL authors="letoff"
-
-ENTRYPOINT ["top", "-b"]
+FROM node:latest
+WORKDIR Docker/front/
+COPY package*.json ./
+RUN npm install
+RUN npm i
