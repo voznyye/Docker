@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>productsPage</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link rel="stylesheet" href="styles/style.min.css">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header__container">
+				<div class="header__body">
+					<a href="products.html" class="header__logo">
+						<img src="images/KAYO%20(500×200%20px)%20(200×200%20px)-cropped.svg" alt="" />
+					</a>
+
+					<div class="header__menu menu">
+						<button type="button" class="menu__icon icon-menu">
+							<span></span>
+						</button>
+						<nav class="menu__body">
+							<ul class="menu__list">
+								<li class="menu__item"><a href="products.html" class="menu__link">products</a></li>
+								<li class="menu__item">
+									<a href="" class="menu__link">Contact us</a>
+								</li>
+								<li class="menu__item"><a href="" class="menu__link">FAQ</a></li>
+							</ul>
+						</nav>
+					</div>
+					<div class="header__buttons">
+						<a href="sign-up.html" class="header__button button">Sign up</a>
+						<a href="log-in.html" class="header__button button">Log in</a>
+					</div>
+
+				</div>
+			</div>
+		</header>
+
+		<main class="page">
+			<div class="user">
+				<div class="user__container">
+					<div class="user__body">
+						<form action="" class="user__form">
+							<div class="user__form-input-block">
+								<input type="text" id="user-name" name="name" placeholder="My name" class="input" />
+								<input type="text" id="user-password" name="password" placeholder="My password" class="input" />
+							</div>
+							<button class="user__button user__button-delete" id="change-data">
+								change information about myself
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__body">
+					<a href="" class="footer__logo">
+						<img src="images/KAYO%20(500×200%20px)%20(200×200%20px)-cropped.svg" alt="" />
+					</a>
+					<p>2023 AEH students project</p>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+	
+	<!-- создание window.env.host - так и создается искуственное свойство env.host для глобального объекта window при загрузке страницы-->
+	<script src="build/config.js"></script>
+
+	<!-- Затем подгружаются остальные скрипты и видят новое добавленное свойство window.env.host -->
+	<script src="build/scripts.js"></script>
+</body>
+
+</html>
