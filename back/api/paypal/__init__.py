@@ -22,7 +22,7 @@ def pay():
     environment = SandboxEnvironment(client_id=client_id, client_secret=client_secret)
     client = PayPalHttpClient(environment)
 
-    from back.paypalcheckoutsdk import OrdersCreateRequest
+    from paypalcheckoutsdk import OrdersCreateRequest
     from paypalhttp import HttpError
     # Construct a request object and set desired parameters
     # Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
