@@ -1,4 +1,3 @@
-
 from back.paypalcheckoutsdk.payments.authorizations_capture_request import *
 from back.paypalcheckoutsdk.payments.authorizations_get_request import *
 from back.paypalcheckoutsdk.payments.authorizations_reauthorize_request import *
