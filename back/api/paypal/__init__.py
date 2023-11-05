@@ -1,4 +1,4 @@
-from back.paypalcheckoutsdk import PayPalHttpClient, SandboxEnvironment
+from back.paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
 from flask import jsonify, Blueprint, request
 from back.api.paypal.paypal import Paypal
 

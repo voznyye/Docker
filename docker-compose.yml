@@ -2,11 +2,11 @@ version: '3'
 
 services:
   flask:
-    build: back/Dockerfile
+    build: back/
     container_name: flask
     command: flask --app run run --debug
 
   npm:
-    build: front/Dockerfile
+    build: front/
     container_name: npm
     command: npm run start
