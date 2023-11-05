@@ -1,5 +1,5 @@
 FROM node:latest
 WORKDIR Docker/front/
-COPY package*.json ./
+COPY * ./
 RUN npm install
 RUN npm i
