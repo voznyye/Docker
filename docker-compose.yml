@@ -1,8 +1,8 @@
-version: '3'
+version: '01'
 
 services:
   flask:
-    build: back
+    build: api/
     container_name: flask
     command: flask --app run run --debug
 

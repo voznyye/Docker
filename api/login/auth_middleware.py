@@ -19,7 +19,7 @@ def token_required(f):
             }, 401
         try:
             data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
-            from back.api.user import User
+            from api.user import User
             user_class = User()
             current_user = user_class.findBy(data["name"], data["password"])
             if current_user is None:

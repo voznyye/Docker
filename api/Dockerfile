@@ -1,4 +1,7 @@
 FROM python:3.11
-WORKDIR back
-COPY * ./
+
+WORKDIR /DockerTest/api
+
+COPY . .
+
 RUN pip install -r requirements.txt

@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 
-from api import user, login, products
-from api import paypal
+from . import user, login, products, paypal
 from api.user import db
 
 UPLOAD_FOLDER = '.\clients\public\image'

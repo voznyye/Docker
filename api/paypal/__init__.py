@@ -1,4 +1,4 @@
-from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
+from api.paypalcheckoutsdk.core import paypal_http_client, environment
 from flask import jsonify, Blueprint, request
 from api.paypal.paypal import Paypal
 
@@ -19,14 +19,14 @@ def pay():
     client_secret = "EJKtgAj2Afz1R19vcsFVZfhhd0MygQsXGBOL-6tgAYe1gMh_oj1wkoGsVkvt378z2dJX0_xh3VjgbcuL"
 
     # Creating an environment
-    environment = SandboxEnvironment(client_id=client_id, client_secret=client_secret)
-    client = PayPalHttpClient(environment)
+    sandboxenviroment = environment(client_id=client_id, client_secret=client_secret)
+    client = paypal_http_client(sandboxenviroment)
 
-    from paypalcheckoutsdk import OrdersCreateRequest
+    from api.paypalcheckoutsdk.orders import orders_get_request
     from paypalhttp import HttpError
     # Construct a request object and set desired parameters
     # Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
-    req = OrdersCreateRequest()
+    req = orders_get_request()
 
     req.prefer('return=representation')
 

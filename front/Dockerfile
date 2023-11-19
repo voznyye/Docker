@@ -1,5 +1,5 @@
 FROM node:latest
-WORKDIR front
-COPY * ./
+WORKDIR front/
+COPY . .
 RUN npm install
 RUN npm i
