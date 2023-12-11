@@ -1,12 +1,26 @@
-version: '01'
+version: '3'
 
 services:
   flask:
     build: api/
+    networks:
+      - docker1_default
+    ports:
+      - "50:50"
     container_name: flask
     command: flask --app run run --debug
 
   npm:
     build: front/
+    networks:
+      - docker1_default
+    ports:
+      - "5000:5000"
     container_name: npm
     command: npm run start
+    depends_on:
+      - flask
+
+networks:
+  docker1_default:
+    driver: bridge
