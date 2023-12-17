@@ -1,4 +1,4 @@
-version: '6'
+version: '7'
 
 services:
   flask:
@@ -6,18 +6,25 @@ services:
     networks:
       - docker1_default
     ports:
-      - "50:5050"
+      - "50:50"
+    depends_on:
+      - db
     container_name: flask
-    command: flask --app run run --debug
+    volumes:
+      - flask-data:/user/data
+    command: flask --app run init-db
 
-  npm:
-    build: front/
-    networks:
-      - docker1_default
-    ports:
-      - "5000:5000"
-    container_name: npm
-    command: npm run start
+  db:
+    build:
+      context: ./data
+      dockerfile: Dockerfile
+    volumes:
+      - db-data:/data
+    container_name: db
+
+volumes:
+  flask-data:
+  db-data:
 
 networks:
   docker1_default:

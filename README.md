@@ -5,3 +5,6 @@ back i front teorytycznie powiązane między sabą
 
 
 proszę uruchomić plik docker-compose.yml 
+
+
+docker pull esolang/sqlite3

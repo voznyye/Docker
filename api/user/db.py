@@ -3,7 +3,7 @@ import sqlite3
 import click
 from flask import g, current_app
 
-db_name = 'api/user/db.db'
+db_name = 'data/db.db'
 
 
 def dict_factory(cursor, row):

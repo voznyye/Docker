@@ -2,12 +2,8 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
+RUN npm install \
+    npm run start
 
 EXPOSE 5050
-
-CMD ["npm", "run", "start"]
