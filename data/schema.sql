@@ -13,8 +13,7 @@ CREATE TABLE products (
   name TEXT UNIQUE NOT NULL,
   price INTEGER NOT NULL,
   title TEXT NOT NULL,
-  image TEXT NOT NULL,
-  status TEXT DEFAULT 'active'
+  image TEXT NOT NULL
 );
 
 CREATE TABLE payment (

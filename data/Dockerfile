@@ -2,10 +2,10 @@ FROM esolang/sqlite3:latest
 
 WORKDIR /data
 
-COPY schema.sql /data/
+COPY . .
 
-COPY db.db /data/
+RUN chmod -R 777 /data/
 
-RUN chmod -R 777 /data
+RUN sqlite3 db.db < schema.sql
 
 CMD ["sqlite3", "/data/db.db", ".read", "/data/schema.sql"]

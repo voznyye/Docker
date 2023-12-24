@@ -4,6 +4,8 @@ from flask_cors import CORS
 from . import user, login, products, paypal
 from api.user import db
 
+
+
 UPLOAD_FOLDER = '.\clients\public\image'
 PUBLIC_FOLDER = 'public/image'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -13,6 +15,7 @@ def create_api():
     app_flask.config.from_mapping(
         SECRET_KEY='dev',
     )
+
     app_flask.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app_flask.config['PUBLIC_FOLDER'] = PUBLIC_FOLDER
     app_flask.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS

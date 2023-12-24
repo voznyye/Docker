@@ -3,8 +3,9 @@ import sqlite3
 import click
 from flask import g, current_app
 
-db_name = 'data/db.db'
+import os
 
+db_name = os.path.abspath(os.environ.get('DB_PATH', '/data/db.db'))
 
 def dict_factory(cursor, row):
     fields = [column[0] for column in cursor.description]

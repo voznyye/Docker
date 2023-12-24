@@ -11,19 +11,20 @@ services:
       - db
     container_name: flask
     volumes:
-      - flask-data:/user/data
+      - db-data:/data/
     command: flask --app run init-db
 
   db:
     build:
       context: ./data
       dockerfile: Dockerfile
+    ports:
+      - "55:55"
     volumes:
-      - db-data:/data
+      - db-data:/data/
     container_name: db
 
 volumes:
-  flask-data:
   db-data:
 
 networks:
