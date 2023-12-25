@@ -4,8 +4,8 @@ WORKDIR /data
 
 COPY . .
 
-RUN chmod -R 777 /data/
+ENV PATH="/Docker/data/:$PATH"
 
-RUN sqlite3 db.db < schema.sql
+RUN chmod -R 777 /data
 
-CMD ["sqlite3", "/data/db.db", ".read", "/data/schema.sql"]
+CMD "./init.sh"

@@ -9,7 +9,7 @@ user = User()
 
 
 @bp.route('/', methods=['GET'])
-@token_required
+# @token_required
 def get_users():
     """Get all user"""
     return jsonify(user.getUsers()), 200
@@ -32,7 +32,7 @@ def create_user():
 
 
 @bp.route('/<int:user_id>', methods=['GET'])
-@token_required
+# @token_required
 def get_user(user_id):
     row = user.findUserById(user_id)
 
@@ -43,7 +43,7 @@ def get_user(user_id):
 
 
 @bp.route('/<int:user_id>', methods=['PUT'])
-@token_required
+# @token_required
 def update_user(user_id):
     """Update a user"""
     name = request.json.get('name')
@@ -62,7 +62,7 @@ def update_user(user_id):
 
 
 @bp.route('/<int:user_id>', methods=['DELETE'])
-@token_required
+# @token_required
 def delete_user(user_id):
     row = user.findUserById(user_id)
 

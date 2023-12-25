@@ -18,14 +18,14 @@ def allowed_file(filename):
 
 
 @bp.route('/', methods=['GET'])
-@token_required
+# @token_required
 def get_products():
     """Get all products"""
     return jsonify(product.getProducts()), 200
 
 
 @bp.route('/', methods=['POST'])
-@token_required
+# @token_required
 def create_product():
     file = request.files['image']
     json_data = json.loads(request.form.get('product'))
@@ -50,7 +50,7 @@ def create_product():
 
 
 @bp.route('/<string:name>', methods=['GET'])
-@token_required
+# @token_required
 def get_product_by_name(name):
     row = product.findByName(name)
 
@@ -63,7 +63,7 @@ def get_product_by_name(name):
 
 
 @bp.route('/<int:product_id>', methods=['GET'])
-@token_required
+# @token_required
 def get_product_by_id(product_id):
     row = product.findProductById(product_id)
 
@@ -76,7 +76,7 @@ def get_product_by_id(product_id):
 
 
 @bp.route('/<int:product_id>', methods=['PUT'])
-@token_required
+# @token_required
 def update_product(product_id):
     """Update a product"""
     name = request.json.get('name')
@@ -97,7 +97,7 @@ def update_product(product_id):
 
 
 @bp.route('/<int:product_id>', methods=['DELETE'])
-@token_required
+# @token_required
 def delete_product(product_id):
     row = product.deleteProduct(product_id)
 

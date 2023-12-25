@@ -4,7 +4,7 @@ WORKDIR /DockerTest/api
 
 RUN python -m venv venv
 
-ENV PATH="/DockerTest/api/venv/bin:$PATH"
+ENV PATH="/Docker/api/venv/bin:$PATH"
 
 COPY . .
 
