@@ -20,7 +20,5 @@ front/clients/build/
 
 flask_session
 
-*.db
-
 front/clients/build
 front/clients/public/image

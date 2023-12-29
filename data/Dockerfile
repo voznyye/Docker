@@ -1,11 +1,10 @@
-FROM esolang/sqlite3:latest
+FROM debian:bullseye-slim
 
-WORKDIR /data
+WORKDIR /data/
 
 COPY . .
 
-ENV PATH="/Docker/data/:$PATH"
-
-RUN chmod -R 777 /data
-
-CMD "./init.sh"
+RUN chmod -R 777 /data && \
+    apt update && \
+    apt install -y sqlite3 && \
+    ./init.sh

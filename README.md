@@ -7,8 +7,9 @@ powiązane między sabą przez volume
 proszę uruchomić "docker pull esolang/sqlite3"
 oraz plik docker-compose.yml 
 
-
+robiłem to tak: docker-compose -f docker-compose.yml -p docker up -d
 
 przykład testu za pomocą postman`a
 ![img.png](img.png)
 ![Screenshot from 2023-12-25 01-41-27.png](..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-12-25%2001-41-27.png)
+
