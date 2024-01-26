@@ -7,21 +7,22 @@ services:
       - docker_default
     ports:
       - "50:50"
+    container_name: flask
+    command: flask --app run init-db
     depends_on:
       - db
-    container_name: flask
-    volumes:
-      - db-data:/data/
-    command: flask --app run init-db
 
   db:
     build: data/
-    volumes:
-      - db-data:/data/
-    container_name: db
-
-volumes:
-  db-data:
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    networks:
+      - docker_default
 
 networks:
   docker_default:

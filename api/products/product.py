@@ -9,10 +9,10 @@ class Product(Resource):
 
     def findProductById(self, product_id):
         user_db = get_db()
-        return user_db.execute('SELECT * FROM products WHERE id=?', (product_id,)).fetchone()
+        return user_db.execute('SELECT * FROM products WHERE id=%s', (product_id,)).fetchone()
 
     def findByName(self, name):
-        return get_db().execute('SELECT * FROM products WHERE name=?', (name,)).fetchone()
+        return get_db().execute('SELECT * FROM products WHERE name=%s', (name,)).fetchone()
 
     def createProduct(self, name, price, title, image):
 
@@ -21,7 +21,7 @@ class Product(Resource):
         if find_product is None:
             # Insert the new user into the database
             produts_db = get_db()
-            produts_db.execute('INSERT INTO products (name, price, title, image) VALUES (?, ?, ?, ?)', (name, price, title, image))
+            produts_db.execute('INSERT INTO products (name, price, title, image) VALUES (%s, %s, %s, %s)', (name, price, title, image))
             produts_db.commit()
         else:
             raise Exception(f"Product {name} is already exist.")
@@ -34,12 +34,12 @@ class Product(Resource):
                 fields[field] = locals()[field]
         sets = ', '.join([f'{key}=?' for key in fields])
         values = tuple(fields.values()) + (product_id,)
-        db.execute(f'UPDATE products SET {sets} WHERE id=?', values)
+        db.execute(f'UPDATE products SET {sets} WHERE id=%s', values)
         db.commit()
 
     def deleteProduct(self, product_id):
         """Delete a user"""
         user_db = get_db()
-        user_db.execute('DELETE FROM products WHERE id=?', (product_id,))
+        user_db.execute('DELETE FROM products WHERE id=%s', (product_id,))
         user_db.commit()
 

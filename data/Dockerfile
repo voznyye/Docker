@@ -1,10 +1,8 @@
-FROM debian:bullseye-slim
+FROM mysql:latest
 
-WORKDIR /data/
+ENV MYSQL_DATABASE=mydatabase \
+    MYSQL_USER=myuser \
+    MYSQL_PASSWORD=mypassword \
+    MYSQL_ROOT_PASSWORD=root
 
-COPY . .
-
-RUN chmod -R 777 /data && \
-    apt update && \
-    apt install -y sqlite3 && \
-    ./init.sh
+COPY ./init.sql /docker-entrypoint-initdb.d/

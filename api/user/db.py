@@ -1,29 +1,45 @@
-import sqlite3
+import pymysql
 
 import click
 from flask import g, current_app
 
 import os
 
-db_name = os.path.abspath(os.environ.get('DB_PATH', '/data/db.db'))
+
 
 def dict_factory(cursor, row):
-    fields = [column[0] for column in cursor.description]
-    return {key: value for key, value in zip(fields, row)}
+    """Converts mysql result rows to dictionaries."""
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
 
 
 def get_db():
+    """Establishes a connection to the mysql database."""
     if 'db' not in g:
-        g.db = sqlite3.connect(
-            db_name,
-            detect_types=sqlite3.PARSE_DECLTYPES
-        )
-        g.db.row_factory = dict_factory
+        try:
+            g.db = pymysql.connect(
+                host=os.environ.get('DB_HOST', 'db'),
+                port=int(os.environ.get('DB_PORT', 3306)),
+                user=os.environ.get('DB_USER', 'myuser'),
+                password=os.environ.get('DB_PASSWORD', 'mypassword'),
+                database=os.environ.get('DB_DATABASE', 'mydatabase'),
+                charset='utf8',
+                cursorclass=pymysql.cursors.DictCursor
+            )
+
+        except Exception as e:
+            print(e)
+            raise e
 
     return g.db
 
 
+
 def close_db(e=None):
+    """Closes the connection to the mysql database."""
     db = g.pop('db', None)
 
     if db is not None:
@@ -33,7 +49,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('user/schema.sql') as f:
+    with current_app.open_resource('user/init.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 

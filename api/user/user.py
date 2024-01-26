@@ -13,16 +13,21 @@ def hash_password(password):
 
 class User(Resource):
     def getUsers(self):
-        return get_db().execute('SELECT id, name FROM user').fetchall()
+        cursor = get_db().cursor()
+        cursor.execute('SELECT id, name FROM user')
+        return cursor.fetchall()
 
     def findUserById(self, user_id):
         """Get a user by ID"""
         user_db = get_db()
-        return user_db.execute('SELECT id, name FROM user WHERE id=?', (user_id,)).fetchone()
+        cursor = user_db.cursor()
+        cursor.execute('SELECT id, name FROM user WHERE id=%s', (user_id))
+        return cursor.fetchone()
 
     def findBy(self, name, password):
-        return get_db().execute('SELECT id, name, password FROM user WHERE name=? and password=?',
-                                (name, password,)).fetchone()
+        cursor = get_db().cursor()
+        cursor.execute('SELECT id, name, password FROM user WHERE name=%s and password=%s', (name, password))
+        return cursor.fetchone()
 
     def createUser(self, name, password):
         # Hash the password before storing it
@@ -33,7 +38,8 @@ class User(Resource):
         if find_user is None:
             # Insert the new user into the database
             user_db = get_db()
-            user_db.execute('INSERT INTO user (name, password) VALUES (?, ?)', (name, hashed_password))
+            cursor = user_db.cursor()
+            cursor.execute('INSERT INTO user (name, password) VALUES (%s, %s)', (name, hashed_password))
             user_db.commit()
         else:
             raise Exception(f"User {name} is already registered.")
@@ -44,16 +50,18 @@ class User(Resource):
 
         # Update the user in the database
         user_db = get_db()
+        cursor = user_db.cursor()
         if name and hashed_password:
-            user_db.execute('UPDATE user SET name=?, password=? WHERE id=?', (name, hashed_password, user_id))
+            cursor.execute('UPDATE user SET name=%s, password=%s WHERE id=%s', (name, hashed_password, user_id))
         elif name:
-            user_db.execute('UPDATE user SET name=? WHERE id=?', (name, user_id))
+            cursor.execute('UPDATE user SET name=%s WHERE id=%s', (name, user_id))
         else:
-            user_db.execute('UPDATE user SET password=? WHERE id=?', (hashed_password, user_id))
+            cursor.execute('UPDATE user SET password=%s WHERE id=%s', (hashed_password, user_id))
         user_db.commit()
 
     def deleteUser(self, user_id):
         """Delete a user"""
         user_db = get_db()
-        user_db.execute('DELETE FROM user WHERE id=?', (user_id,))
+        cursor = user_db.cursor()
+        cursor.execute('DELETE FROM user WHERE id=%s', (user_id))
         user_db.commit()

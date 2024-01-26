@@ -48,3 +48,4 @@ Flask-SQLAlchemy==3.0.3
 SQLAlchemy~=2.0.7
 paypalhttp
 responses
+pymysql

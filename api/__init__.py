@@ -15,7 +15,6 @@ def create_api():
     app_flask.config.from_mapping(
         SECRET_KEY='dev',
     )
-
     app_flask.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app_flask.config['PUBLIC_FOLDER'] = PUBLIC_FOLDER
     app_flask.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
